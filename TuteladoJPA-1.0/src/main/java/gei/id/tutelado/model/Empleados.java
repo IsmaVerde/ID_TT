@@ -1,5 +1,6 @@
 package gei.id.tutelado.model;
 
+import javax.persistence.*;
 import java.util.Objects;
 
 public class Empleados extends Persona {
@@ -9,6 +10,10 @@ public class Empleados extends Persona {
     private int sueldo;
 
     private String experiencia;
+
+    @ManyToOne
+    @JoinColumn (name="museo", nullable = false)
+    private Museo museo;
 
     public String getPuesto() {
         return puesto;
@@ -34,19 +39,12 @@ public class Empleados extends Persona {
         this.experiencia = experiencia;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Empleados)) return false;
-        Empleados empleados = (Empleados) o;
-        return sueldo == empleados.sueldo &&
-                Objects.equals(puesto, empleados.puesto) &&
-                Objects.equals(experiencia, empleados.experiencia);
+    public Museo getMuseo() {
+        return museo;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(puesto, sueldo, experiencia);
+    public void setMuseo(Museo museo) {
+        this.museo = museo;
     }
 
     @Override
@@ -55,6 +53,7 @@ public class Empleados extends Persona {
                 "puesto='" + puesto + '\'' +
                 ", sueldo=" + sueldo +
                 ", experiencia='" + experiencia + '\'' +
+                ", museo=" + museo +
                 '}';
     }
 }

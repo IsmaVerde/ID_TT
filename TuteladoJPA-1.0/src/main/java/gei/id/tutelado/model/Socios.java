@@ -1,19 +1,31 @@
 package gei.id.tutelado.model;
 
+import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
+@Entity
 public class Socios extends Persona {
 
+    @Column(nullable = false)
     private String tipo;
 
+    @Column()
     private String profesion;
 
+    @Column(nullable = false)
     private String procedencia;
 
+    @Column()
     private List<String> descuentos;
 
-    private List<Museo> museos;
+    @ManyToMany
+    @JoinTable(name = "socio_museo",
+            joinColumns = @JoinColumn(name = "id_socio"),
+            inverseJoinColumns = @JoinColumn(name = "id_museo"))
+    private Set<Museo> museos = new HashSet<Museo>();
 
     public String getTipo() {
         return tipo;
@@ -47,11 +59,11 @@ public class Socios extends Persona {
         this.descuentos = descuentos;
     }
 
-    public List<Museo> getMuseos() {
+    public Set<Museo> getMuseos() {
         return museos;
     }
 
-    public void setMuseos(List<Museo> museos) {
+    public void setMuseos(Set<Museo> museos) {
         this.museos = museos;
     }
 

@@ -1,14 +1,33 @@
 package gei.id.tutelado.model;
 
 import java.util.Objects;
+import javax.persistence.*;
 
-public class Persona{
+@TableGenerator(name="generadorIdsPersona", table="tabla_ids",
+        pkColumnName="nombre_id", pkColumnValue="idPersona",
+        valueColumnName="ultimo_valor_id",
+        initialValue=0, allocationSize=1)
+
+@NamedQueries ({
+        @NamedQuery (name="Persona.recuperaPorDNI",
+                query="SELECT p FROM Persona p where p.dni=:dni"),
+        @NamedQuery (name="Persona.recuperaTodas",
+                query="SELECT p FROM Persona p ORDER BY p.dni")
+})
+
+@Entity
+public abstract class Persona{
+    @Id
+    @GeneratedValue (generator="generadorIdsPersona")
     private Long id;
 
+    @Column(nullable = false, unique = true)
     private String dni;
 
+    @Column(nullable = false)
     private String nombrecompleto;
 
+    @Column(nullable = false, unique = true)
     private String email;
 
     public Long getId() {
@@ -48,15 +67,12 @@ public class Persona{
         if (this == o) return true;
         if (!(o instanceof Persona)) return false;
         Persona persona = (Persona) o;
-        return id.equals(persona.id) &&
-                dni.equals(persona.dni) &&
-                nombrecompleto.equals(persona.nombrecompleto) &&
-                email.equals(persona.email);
+        return dni.equals(persona.dni);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, dni, nombrecompleto, email);
+        return Objects.hash(dni);
     }
 
     @Override

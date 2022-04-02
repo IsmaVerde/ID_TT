@@ -1,7 +1,10 @@
 package gei.id.tutelado.model;
 
+import javax.persistence.ManyToMany;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 public class Museo {
 
@@ -13,9 +16,10 @@ public class Museo {
 
     private String categoria;
 
-    private List<Socios> inscritos;
+    @ManyToMany (mappedBy = "museos")
+    private Set<Socios> inscritos = new HashSet<Socios>();
 
-    private List<Empleados> empleados;
+    private Set<Empleados> empleados;
 
     public Long getIdmuseo() {
         return idmuseo;
@@ -49,19 +53,19 @@ public class Museo {
         this.categoria = categoria;
     }
 
-    public List<Socios> getInscritos() {
+    public Set<Socios> getInscritos() {
         return inscritos;
     }
 
-    public void setInscritos(List<Socios> inscritos) {
+    public void setInscritos(Set<Socios> inscritos) {
         this.inscritos = inscritos;
     }
 
-    public List<Empleados> getEmpleados() {
+    public Set<Empleados> getEmpleados() {
         return empleados;
     }
 
-    public void setEmpleados(List<Empleados> empleados) {
+    public void setEmpleados(Set<Empleados> empleados) {
         this.empleados = empleados;
     }
 
@@ -70,17 +74,12 @@ public class Museo {
         if (this == o) return true;
         if (!(o instanceof Museo)) return false;
         Museo museo = (Museo) o;
-        return idmuseo.equals(museo.idmuseo) &&
-                nombre.equals(museo.nombre) &&
-                ubicacion.equals(museo.ubicacion) &&
-                Objects.equals(categoria, museo.categoria) &&
-                Objects.equals(inscritos, museo.inscritos) &&
-                Objects.equals(empleados, museo.empleados);
+        return nombre.equals(museo.nombre);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idmuseo, nombre, ubicacion, categoria, inscritos, empleados);
+        return Objects.hash(nombre);
     }
 
     @Override
