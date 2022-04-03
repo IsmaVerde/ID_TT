@@ -16,6 +16,7 @@ import javax.persistence.*;
 })
 
 @Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class Persona{
     @Id
     @GeneratedValue (generator="generadorIdsPersona")
@@ -27,7 +28,7 @@ public abstract class Persona{
     @Column(nullable = false)
     private String nombrecompleto;
 
-    @Column(nullable = false, unique = true)
+    @Column(unique = true)
     private String email;
 
     public Long getId() {

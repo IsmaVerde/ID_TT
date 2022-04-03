@@ -3,16 +3,21 @@ package gei.id.tutelado.model;
 import javax.persistence.*;
 import java.util.Objects;
 
+@Entity
+@Table(name = "t_empleados_tcc")
 public class Empleados extends Persona {
 
+    @Column(nullable = false)
     private String puesto;
 
+    @Column(nullable = false)
     private int sueldo;
 
+    @Column()
     private String experiencia;
 
     @ManyToOne
-    @JoinColumn (name="museo", nullable = false)
+    @JoinColumn (name="museo_emp", nullable = false)
     private Museo museo;
 
     public String getPuesto() {

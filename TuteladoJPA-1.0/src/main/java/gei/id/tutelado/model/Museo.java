@@ -1,24 +1,42 @@
 package gei.id.tutelado.model;
 
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
-public class Museo {
+@TableGenerator(name="generadorIdsMuseo", table="tabla_ids",
+        pkColumnName="nombre_id", pkColumnValue="idMuseo",
+        valueColumnName="ultimo_valor_id",
+        initialValue=0, allocationSize=1)
 
+@NamedQueries({
+        @NamedQuery(name="Museo.recuperaPorNombre",
+                query="SELECT m FROM Museo m where m.nombre=:nombre"),
+        @NamedQuery (name="Usuario.recuperaTodos",
+                query="SELECT m FROM Museo m ORDER BY m.nombre")
+})
+
+@Entity
+public class Museo {
+    @Id
+    @GeneratedValue (generator="generadorIdsMuseos")
     private Long idmuseo;
 
+    @Column(nullable = false, unique = true)
     private String nombre;
 
+    @Column(nullable = false)
     private String ubicacion;
 
+    @Column(nullable = false)
     private String categoria;
 
     @ManyToMany (mappedBy = "museos")
     private Set<Socios> inscritos = new HashSet<Socios>();
 
+    @OneToMany (mappedBy = "museo")
     private Set<Empleados> empleados;
 
     public Long getIdmuseo() {
