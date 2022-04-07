@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
+import gei.id.tutelado.model.Museo;
 import org.hibernate.LazyInitializationException;
 
 import gei.id.tutelado.configuracion.Configuracion;
@@ -112,4 +113,101 @@ public class MuseoDaoJPA implements MuseoDao {
 
         return (museos.size() != 0 ? museos.get(0) : null);
     }
+
+    public Museo restauraSocios (Museo museo){
+
+        try {
+            em = emf.createEntityManager();
+            em.getTransaction().begin();
+
+            try {
+                museo.getInscritos().size();
+            } catch (Exception ex2) {
+                if (ex2 instanceof LazyInitializationException)
+
+                {
+
+                    museo = em.merge(museo);
+                    museo.getInscritos().size();
+
+                } else {
+                    throw ex2;
+                }
+            }
+            em.getTransaction().commit();
+            em.close();
+        }
+        catch (Exception ex ) {
+            if (em!=null && em.isOpen()) {
+                if (em.getTransaction().isActive()) em.getTransaction().rollback();
+                em.close();
+                throw(ex);
+            }
+        }
+
+        return (museo);
+
+
+    }
+
+    public Museo restauraEmpleados (Museo museo){
+
+        try {
+            em = emf.createEntityManager();
+            em.getTransaction().begin();
+
+            try {
+                museo.getEmpleados().size();
+            } catch (Exception ex2) {
+                if (ex2 instanceof LazyInitializationException)
+
+                {
+
+                    museo = em.merge(museo);
+                    museo.getEmpleados().size();
+
+                } else {
+                    throw ex2;
+                }
+            }
+            em.getTransaction().commit();
+            em.close();
+        }
+        catch (Exception ex ) {
+            if (em!=null && em.isOpen()) {
+                if (em.getTransaction().isActive()) em.getTransaction().rollback();
+                em.close();
+                throw(ex);
+            }
+        }
+
+        return (museo);
+
+
+    }
+    
+    public List<Museo> recuperaTodos(Museo museo){
+        List <Museo> museos=null;
+
+        try {
+            em = emf.createEntityManager();
+            em.getTransaction().begin();
+
+            museos = em.createNamedQuery("Museo.recuperaTodos", Museo.class).getResultList();
+
+            em.getTransaction().commit();
+            em.close();
+
+        }
+        catch (Exception ex ) {
+            if (em!=null && em.isOpen()) {
+                if (em.getTransaction().isActive()) em.getTransaction().rollback();
+                em.close();
+                throw(ex);
+            }
+        }
+
+        return museos;
+    }
+    
 }

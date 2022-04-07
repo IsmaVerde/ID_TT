@@ -5,13 +5,15 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
+import gei.id.tutelado.model.Empleados;
+import gei.id.tutelado.model.Usuario;
 import org.hibernate.LazyInitializationException;
 
 import gei.id.tutelado.configuracion.Configuracion;
 import gei.id.tutelado.model.Persona;
 
 
-public class PersonaDaoJPA implements PersonaDao {
+public abstract class PersonaDaoJPA implements PersonaDao {
 
     private EntityManagerFactory emf;
     private EntityManager em;
@@ -112,4 +114,6 @@ public class PersonaDaoJPA implements PersonaDao {
 
         return (personas.size() != 0 ? personas.get(0) : null);
     }
+
+
 }

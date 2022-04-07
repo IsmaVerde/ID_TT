@@ -3,7 +3,9 @@ package gei.id.tutelado.dao;
 import java.util.List;
 
 import gei.id.tutelado.configuracion.Configuracion;
+import gei.id.tutelado.model.Empleados;
 import gei.id.tutelado.model.Museo;
+import gei.id.tutelado.model.Socios;
 
 public interface MuseoDao {
 
@@ -14,5 +16,8 @@ public interface MuseoDao {
     Museo modifica (Museo museo);
     void elimina (Museo museo);
     Museo recuperaPorNombre (String nombre);
+    Museo restauraEmpleados (Museo museo);
+    Museo restauraSocios (Museo museo);
+    List<Museo> recuperaTodos(Museo museo);
 
 }
