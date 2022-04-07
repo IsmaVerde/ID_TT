@@ -33,10 +33,10 @@ public class Museo {
     @Column(nullable = false)
     private String categoria;
 
-    @ManyToMany (mappedBy = "museos")
+    @ManyToMany (mappedBy = "museos", fetch=FetchType.LAZY, cascade={})
     private Set<Socios> inscritos = new HashSet<Socios>();
 
-    @OneToMany (mappedBy = "museo")
+    @OneToMany (mappedBy = "museo" , fetch=FetchType.LAZY, cascade={CascadeType.MERGE, CascadeType.REMOVE})
     private Set<Empleados> empleados;
 
     public Long getIdmuseo() {

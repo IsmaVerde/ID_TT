@@ -22,7 +22,7 @@ public class Socios extends Persona {
     @Column()
     private List<String> descuentos;
 
-    @ManyToMany
+    @ManyToMany (cascade={}, fetch=FetchType.EAGER)
     @JoinTable(name = "socio_museo",
             joinColumns = @JoinColumn(name = "id_socio"),
             inverseJoinColumns = @JoinColumn(name = "id_museo"))

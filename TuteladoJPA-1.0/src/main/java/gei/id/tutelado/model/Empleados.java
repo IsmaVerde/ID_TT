@@ -16,7 +16,7 @@ public class Empleados extends Persona {
     @Column()
     private String experiencia;
 
-    @ManyToOne
+    @ManyToOne (fetch=FetchType.LAZY, cascade={} )
     @JoinColumn (name="museo_emp", nullable = false)
     private Museo museo;
 
