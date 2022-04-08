@@ -3,17 +3,6 @@ package gei.id.tutelado.model;
 import java.util.Objects;
 import javax.persistence.*;
 
-@TableGenerator(name="generadorIdsPersona", table="tabla_ids",
-        pkColumnName="nombre_id", pkColumnValue="idPersona",
-        valueColumnName="ultimo_valor_id",
-        initialValue=0, allocationSize=1)
-
-@NamedQueries ({
-        @NamedQuery (name="Persona.recuperaPorDNI",
-                query="SELECT p FROM Persona p where p.dni=:dni"),
-        @NamedQuery (name="Persona.recuperaTodas",
-                query="SELECT p FROM Persona p ORDER BY p.dni")
-})
 
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)

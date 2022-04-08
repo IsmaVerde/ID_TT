@@ -3,6 +3,18 @@ package gei.id.tutelado.model;
 import javax.persistence.*;
 import java.util.Objects;
 
+@TableGenerator(name="generadorIdsEmpleado", table="tabla_ids",
+        pkColumnName="nombre_id", pkColumnValue="idEmpleado",
+        valueColumnName="ultimo_valor_id",
+        initialValue=0, allocationSize=1)
+
+@NamedQueries({
+        @NamedQuery(name="Empleado.recuperaSueldoMaximo",
+                query="SELECT e,avg(sal) FROM Empleado e"),
+        @NamedQuery (name="Empleado.recuperaubicacion",
+                query="SELECT  FROM Museo m ORDER BY m.nombre")
+})
+
 @Entity
 @Table(name = "t_empleados_tcc")
 public class Empleados extends Persona {

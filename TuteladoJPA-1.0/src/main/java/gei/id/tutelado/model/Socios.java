@@ -6,6 +6,16 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+@TableGenerator(name="GeneradorIdSocios", table="tabla_ids",
+        pkColumnName="nombre_id", pkColumnValue="idSocio",
+        valueColumnName="ultimo_valor_id",
+        initialValue=0, allocationSize=1)
+
+@NamedQueries ({
+        @NamedQuery (name="Socios.recuperaMuseos",
+                query="SELECT s,m FROM Socios s INNER JOIN s.museos m where s.idMuseo=:idMuseo"),
+})
+
 @Entity
 @Table(name = "t_socios_tcc")
 public class Socios extends Persona {
