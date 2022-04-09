@@ -18,6 +18,6 @@ public interface MuseoDao {
     Museo recuperaPorNombre (String nombre);
     Museo restauraEmpleados (Museo museo);
     Museo restauraSocios (Museo museo);
-    List<Museo> recuperaTodos(Museo museo);
+    List<Museo> recuperaExperiencia();
 
 }

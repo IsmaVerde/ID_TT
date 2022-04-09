@@ -114,6 +114,7 @@ public class MuseoDaoJPA implements MuseoDao {
         return (museos.size() != 0 ? museos.get(0) : null);
     }
 
+    @Override
     public Museo restauraSocios (Museo museo){
 
         try {
@@ -150,6 +151,7 @@ public class MuseoDaoJPA implements MuseoDao {
 
     }
 
+    @Override
     public Museo restauraEmpleados (Museo museo){
 
         try {
@@ -185,15 +187,16 @@ public class MuseoDaoJPA implements MuseoDao {
 
 
     }
-    
-    public List<Museo> recuperaTodos(Museo museo){
+
+    @Override
+    public List<Museo> recuperaExperiencia(){
         List <Museo> museos=null;
 
         try {
             em = emf.createEntityManager();
             em.getTransaction().begin();
 
-            museos = em.createNamedQuery("Museo.recuperaTodos", Museo.class).getResultList();
+            museos = em.createNamedQuery("Museo.recuperaExperiencia", Museo.class).getResultList();
 
             em.getTransaction().commit();
             em.close();
