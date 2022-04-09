@@ -14,6 +14,8 @@ import java.util.Set;
 @NamedQueries ({
         @NamedQuery (name="Socios.recuperaMuseos",
                 query="SELECT s,m FROM Socios s INNER JOIN s.museos m where s.idMuseo=:idMuseo"),
+        @NamedQuery (name="Socios.recuperaSociosMinDosMuseos",
+                query="SELECT s FROM Socios s where (SELECT COUNT(m) FROM s.museos m) >=2")
 })
 
 @Entity
@@ -29,7 +31,9 @@ public class Socios extends Persona {
     @Column(nullable = false)
     private String procedencia;
 
-    @Column()
+    @ElementCollection
+    @CollectionTable (name="t_soc_descuento",joinColumns=@JoinColumn(name="id_soc",nullable=false))
+    @Column(name="descuento",nullable = false)
     private List<String> descuentos;
 
     @ManyToMany (cascade={}, fetch=FetchType.EAGER)

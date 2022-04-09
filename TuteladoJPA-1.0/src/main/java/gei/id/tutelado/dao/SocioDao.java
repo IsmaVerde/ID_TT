@@ -11,6 +11,7 @@ public interface SocioDao extends PersonaDao {
 
     void setup (Configuracion config);
 
-    List<Socios> recuperaTodos(Socios socio);
+    List<Socios> recuperaMuseos(Long socio);
+    List<Socios> recuperaSociosMinDosMuseos();
 
 }

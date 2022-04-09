@@ -1,6 +1,7 @@
 package gei.id.tutelado.dao;
 
 import gei.id.tutelado.configuracion.Configuracion;
+import gei.id.tutelado.model.EntradaLog;
 import gei.id.tutelado.model.Socios;
 import gei.id.tutelado.model.Socios;
 
@@ -20,14 +21,15 @@ public class SocioDaoJPA extends PersonaDaoJPA implements SocioDao {
     }
 
     @Override
-    public List<Socios> recuperaTodos(Socios socio) {
+    public List<Socios> recuperaMuseos(Long idSocio) {
         List <Socios> socios=null;
 
         try {
             em = emf.createEntityManager();
             em.getTransaction().begin();
 
-            socios = em.createNamedQuery("Socios.recuperaTodos", Socios.class).getResultList();
+            socios = em.createNamedQuery("Socios.recuperaMuseos", Socios.class)
+                    .setParameter("idSocio", idSocio).getResultList();
 
             em.getTransaction().commit();
             em.close();
@@ -44,4 +46,28 @@ public class SocioDaoJPA extends PersonaDaoJPA implements SocioDao {
         return socios;
     }
 
+    @Override
+    public List<Socios> recuperaSociosMinDosMuseos() {
+        List <Socios> socios=null;
+
+        try {
+            em = emf.createEntityManager();
+            em.getTransaction().begin();
+
+            socios = em.createNamedQuery("Socios.recuperaSociosMinDosMuseos", Socios.class).getResultList();
+
+            em.getTransaction().commit();
+            em.close();
+
+        }
+        catch (Exception ex ) {
+            if (em!=null && em.isOpen()) {
+                if (em.getTransaction().isActive()) em.getTransaction().rollback();
+                em.close();
+                throw(ex);
+            }
+        }
+
+        return socios;
+    }
 }
