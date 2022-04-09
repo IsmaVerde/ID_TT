@@ -9,10 +9,8 @@ import java.util.Objects;
         initialValue=0, allocationSize=1)
 
 @NamedQueries({
-        @NamedQuery(name="Empleado.recuperaSueldoMaximo",
-                query="SELECT e,avg(sal) FROM Empleado e"),
-        @NamedQuery (name="Empleado.recuperaubicacion",
-                query="SELECT  FROM Museo m ORDER BY m.nombre")
+        @NamedQuery(name="Empleado.recuperaSueldoMedio",
+                query="SELECT e,avg(sal) FROM Empleado e")
 })
 
 @Entity
@@ -60,7 +58,7 @@ public class Empleados extends Persona {
         return museo;
     }
 
-    public void setMuseo(Museo museo) {
+    public void setMuseo(Museo Museo) {
         this.museo = museo;
     }
 

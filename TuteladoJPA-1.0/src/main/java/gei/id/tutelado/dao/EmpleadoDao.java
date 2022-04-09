@@ -10,7 +10,7 @@ public interface EmpleadoDao extends PersonaDao {
     void setup (Configuracion config);
 
     Empleados recuperaMuseo (Empleados empleado);
-    List<Empleados> recuperaTodos(Empleados empleado);
+    List<Empleados> recuperaSueldoMedio();
 
 
 }

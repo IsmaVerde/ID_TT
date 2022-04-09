@@ -44,14 +44,14 @@ public class EmpleadoDaoJPA extends PersonaDaoJPA implements EmpleadoDao {
     }
 
     @Override
-    public List<Empleados> recuperaTodos(Empleados empleado) {
-        List <Empleados> empleados=null;
+    public List<Empleados> recuperaSueldoMedio() {
+        List <Empleados> salarios=null;
 
         try {
             em = emf.createEntityManager();
             em.getTransaction().begin();
 
-            empleados = em.createNamedQuery("Empleados.recuperaTodos", Empleados.class).getResultList();
+            salarios = em.createNamedQuery("Empleados.recuperaSueldoMedio", Empleados.class).getResultList();
 
             em.getTransaction().commit();
             em.close();
@@ -65,7 +65,7 @@ public class EmpleadoDaoJPA extends PersonaDaoJPA implements EmpleadoDao {
             }
         }
 
-        return empleados;
+        return salarios;
     }
 }
 
