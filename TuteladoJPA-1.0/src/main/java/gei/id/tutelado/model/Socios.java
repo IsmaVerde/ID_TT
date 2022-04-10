@@ -19,7 +19,7 @@ import java.util.Set;
 })
 
 @Entity
-@Table(name = "t_socios_tcc")
+@Table(name = "socios_tcc")
 public class Socios extends Persona {
 
     @Column(nullable = false)
