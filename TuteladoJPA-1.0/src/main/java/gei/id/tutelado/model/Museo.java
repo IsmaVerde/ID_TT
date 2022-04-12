@@ -12,8 +12,10 @@ import java.util.Set;
         initialValue=0, allocationSize=1)
 
 @NamedQueries({
-        @NamedQuery(name="Museo.recuperaExperiencia",
-                query="SELECT m,e.name,e.experiencia FROM Museo m LEFT OUTER JOIN m.empleados e")
+       /* @NamedQuery(name="Museo.recuperaExperiencia",
+                query="SELECT m,e.name,e.experiencia FROM Museo m LEFT OUTER JOIN m.empleados e"),*/
+        @NamedQuery (name="Museo.recuperaPorNombre",
+                query="SELECT m FROM Museo m where m.nombre=:nombre"),
 })
 
 @Entity

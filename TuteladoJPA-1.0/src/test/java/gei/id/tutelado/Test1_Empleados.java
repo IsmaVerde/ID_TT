@@ -4,9 +4,8 @@ import gei.id.tutelado.configuracion.Configuracion;
 import gei.id.tutelado.configuracion.ConfiguracionJPA;
 import gei.id.tutelado.dao.MuseoDao;
 import gei.id.tutelado.dao.MuseoDaoJPA;
-import gei.id.tutelado.dao.SocioDao;
-import gei.id.tutelado.dao.SocioDaoJPA;
-import gei.id.tutelado.model.Socios;
+import gei.id.tutelado.dao.EmpleadoDao;
+import gei.id.tutelado.dao.EmpleadoDaoJPA;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.*;
@@ -15,32 +14,29 @@ import org.junit.rules.TestWatcher;
 import org.junit.runner.Description;
 import org.junit.runners.MethodSorters;
 
-import java.util.Optional;
-
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class Test1_Socios {
+public class Test1_Empleados {
 
     private Logger log = LogManager.getLogger("gei.id.tutelado");
 
     private static DatosPrueba productoDatosPrueba = new DatosPrueba();
     
     private static Configuracion cfg;
-    private static SocioDao socDao;
-	private static MuseoDao musDao;
+    private static EmpleadoDao empDao;
     
     @Rule
     public TestRule watcher = new TestWatcher() {
        protected void starting(Description description) {
     	   log.info("");
     	   log.info("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
-    	   log.info("Iniciando test SOCIOS: " + description.getMethodName());
+    	   log.info("Iniciando test Empleados: " + description.getMethodName());
     	   log.info("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
        }
        protected void finished(Description description) {
     	   log.info("");
     	   log.info("-----------------------------------------------------------------------------------------------------------------------------------------");
-    	   log.info("Finalizado test " + description.getMethodName());
+    	   log.info("Finalizado test" + description.getMethodName());
     	   log.info("-----------------------------------------------------------------------------------------------------------------------------------------");
        }
     };
@@ -50,10 +46,9 @@ public class Test1_Socios {
     	cfg = new ConfiguracionJPA();
     	cfg.start();
 
-    	socDao = new SocioDaoJPA();
-		musDao = new MuseoDaoJPA();
-    	socDao.setup(cfg);
-		musDao.setup(cfg);
+    	empDao = new EmpleadoDaoJPA();
+		
+    	empDao.setup(cfg);
     	
     	productoDatosPrueba = new DatosPrueba();
     	productoDatosPrueba.Setup(cfg);
@@ -87,20 +82,17 @@ public class Test1_Socios {
     	
     	log.info("");	
 		log.info("Inicio do test --------------------------------------------------------------------------------------------------");
-    	log.info("Obxectivo: Proba de gravación na BD de novo socio (sen entradas de log asociadas)\n");
+    	log.info("Obxectivo: Proba de gravación na BD de novo empleado (sen entradas de log asociadas)\n");
     	
     	// Situación de partida:
     	// s0 transitorio
-		productoDatosPrueba.crearMuseosSueltos();
-		musDao.alta(productoDatosPrueba.m0);
-		System.out.println(productoDatosPrueba.m0);
 
-		System.out.println(productoDatosPrueba.s2);
-		socDao.alta(productoDatosPrueba.s2);
-    	Assert.assertNotNull(productoDatosPrueba.s2.getId());
+		System.out.println(productoDatosPrueba.e0);
+		empDao.alta(productoDatosPrueba.e0);
+    	Assert.assertNotNull(productoDatosPrueba.e0.getId());
     }
     
-    @Test
+/*    @Test
     public void t2_CRUD_TestRecupera() {
     	
     	Socios s;
@@ -113,7 +105,7 @@ public class Test1_Socios {
     	
     	log.info("");	
 		log.info("Inicio do test --------------------------------------------------------------------------------------------------");
-    	log.info("Obxectivo: Proba de recuperación desde a BD de socio (sen entradas asociadas) por nif\n"   
+    	log.info("Obxectivo: Proba de recuperación desde a BD de empleado (sen entradas asociadas) por nif\n"   
     			+ "\t\t\t\t Casos contemplados:\n"
     			+ "\t\t\t\t a) Recuperación por nif existente\n"
     			+ "\t\t\t\t b) Recuperacion por nif inexistente\n");
@@ -123,7 +115,7 @@ public class Test1_Socios {
 
     	log.info("Probando recuperacion por nif EXISTENTE --------------------------------------------------");
 
-    	s = (Socios) socDao.recuperaPorDni(productoDatosPrueba.s0.getDni());
+    	s = (Socios) empDao.recuperaPorDni(productoDatosPrueba.s0.getDni());
     	Assert.assertEquals(productoDatosPrueba.s0.getDni(),      s.getDni());
     	Assert.assertEquals(productoDatosPrueba.s0.getNombrecompleto(),     s.getNombrecompleto());
 		Assert.assertEquals(productoDatosPrueba.s0.getEmail(),     s.getEmail());
@@ -131,7 +123,7 @@ public class Test1_Socios {
     	log.info("");	
 		log.info("Probando recuperacion por nif INEXISTENTE -----------------------------------------------");
     	
-    	s = (Socios) socDao.recuperaPorDni("iwbvyhuebvuwebvi");
+    	s = (Socios) empDao.recuperaPorDni("iwbvyhuebvuwebvi");
     	Assert.assertNull (s);
 
     } 	
@@ -148,14 +140,14 @@ public class Test1_Socios {
     	
     	log.info("");	
 		log.info("Inicio do test --------------------------------------------------------------------------------------------------");
-    	log.info("Obxectivo: Proba de eliminación da BD de socio sen entradas asociadas\n");   
+    	log.info("Obxectivo: Proba de eliminación da BD de empleado sen entradas asociadas\n");   
  
     	// Situación de partida:
     	// s0 desligado  
 
-    	Assert.assertNotNull(socDao.recuperaPorDni(productoDatosPrueba.s0.getDni()));
-    	socDao.elimina(productoDatosPrueba.s0);    	
-    	Assert.assertNull(socDao.recuperaPorDni(productoDatosPrueba.s0.getDni()));
+    	Assert.assertNotNull(empDao.recuperaPorDni(productoDatosPrueba.s0.getDni()));
+    	empDao.elimina(productoDatosPrueba.s0);    	
+    	Assert.assertNull(empDao.recuperaPorDni(productoDatosPrueba.s0.getDni()));
     } 	
 
     @Test 
@@ -172,20 +164,20 @@ public class Test1_Socios {
 
     	log.info("");	
 		log.info("Inicio do test --------------------------------------------------------------------------------------------------");
-    	log.info("Obxectivo: Proba de modificación da información básica dun socio sen entradas de log\n");
+    	log.info("Obxectivo: Proba de modificación da información básica dun empleado sen entradas de log\n");
 
     	// Situación de partida:
     	// s0 desligado  
 
 		novoNome = new String ("Nome novo");
 
-		s1 = (Socios) socDao.recuperaPorDni(productoDatosPrueba.s0.getDni());
+		s1 = (Socios) empDao.recuperaPorDni(productoDatosPrueba.s0.getDni());
 		Assert.assertNotEquals(novoNome, s1.getNombrecompleto());
     	s1.setNombrecompleto(novoNome);
 
-    	socDao.modifica(s1);    	
+    	empDao.modifica(s1);    	
     	
-		s2 = (Socios) socDao.recuperaPorDni(productoDatosPrueba.s0.getDni());
+		s2 = (Socios) empDao.recuperaPorDni(productoDatosPrueba.s0.getDni());
 		Assert.assertEquals (novoNome, s2.getNombrecompleto());
 
     } 	
@@ -200,22 +192,22 @@ public class Test1_Socios {
 		log.info("Configurando situación de partida do test -----------------------------------------------------------------------");
 
 		productoDatosPrueba.crearSociosSueltos();
-    	socDao.alta(productoDatosPrueba.s0);
+    	empDao.alta(productoDatosPrueba.s0);
     	
     	log.info("");	
 		log.info("Inicio do test --------------------------------------------------------------------------------------------------");
     	log.info("Obxectivo: Proba de violación de restricións not null e unique\n"   
     			+ "\t\t\t\t Casos contemplados:\n"
-    			+ "\t\t\t\t a) Gravación de socio con nif duplicado\n"
-    			+ "\t\t\t\t b) Gravación de socio con nif nulo\n");
+    			+ "\t\t\t\t a) Gravación de empleado con nif duplicado\n"
+    			+ "\t\t\t\t b) Gravación de empleado con nif nulo\n");
 
     	// Situación de partida:
     	// s0 desligado, s1 transitorio
     	
-		log.info("Probando gravacion de socio con Nif duplicado -----------------------------------------------");
+		log.info("Probando gravacion de empleado con Nif duplicado -----------------------------------------------");
     	productoDatosPrueba.s1.setDni(productoDatosPrueba.s0.getDni());
     	try {
-        	socDao.alta(productoDatosPrueba.s1);
+        	empDao.alta(productoDatosPrueba.s1);
         	excepcion=false;
     	} catch (Exception ex) {
     		excepcion=true;
@@ -225,16 +217,16 @@ public class Test1_Socios {
     	
     	// Nif nulo
     	log.info("");	
-		log.info("Probando gravacion de socio con Nif nulo ----------------------------------------------------");
+		log.info("Probando gravacion de empleado con Nif nulo ----------------------------------------------------");
     	productoDatosPrueba.s1.setDni(null);
     	try {
-        	socDao.alta(productoDatosPrueba.s1);
+        	empDao.alta(productoDatosPrueba.s1);
         	excepcion=false;
     	} catch (Exception ex) {
     		excepcion=true;
     		log.info(ex.getClass().getName());
     	}
     	Assert.assertTrue(excepcion);
-    }
+    } 	*/
     
 }

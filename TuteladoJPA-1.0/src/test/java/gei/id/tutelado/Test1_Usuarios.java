@@ -27,50 +27,51 @@ import org.apache.logging.log4j.Logger;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class Test1_Usuarios {
 
-    private Logger log = LogManager.getLogger("gei.id.tutelado");
+	private Logger log = LogManager.getLogger("gei.id.tutelado");
 
-    private static ProdutorDatosProba produtorDatos = new ProdutorDatosProba();
-    
-    private static Configuracion cfg;
-    private static UsuarioDao usuDao;
-    
-    @Rule
-    public TestRule watcher = new TestWatcher() {
-       protected void starting(Description description) {
-    	   log.info("");
-    	   log.info("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
-    	   log.info("Iniciando test: " + description.getMethodName());
-    	   log.info("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
-       }
-       protected void finished(Description description) {
-    	   log.info("");
-    	   log.info("-----------------------------------------------------------------------------------------------------------------------------------------");
-    	   log.info("Finalizado test: " + description.getMethodName());
-    	   log.info("-----------------------------------------------------------------------------------------------------------------------------------------");
-       }
-    };
-    
-    @BeforeClass
-    public static void init() throws Exception {
-    	cfg = new ConfiguracionJPA();
-    	cfg.start();
+	private static ProdutorDatosProba produtorDatos = new ProdutorDatosProba();
 
-    	usuDao = new UsuarioDaoJPA();
-    	usuDao.setup(cfg);
-    	
-    	produtorDatos = new ProdutorDatosProba();
-    	produtorDatos.Setup(cfg);
-    }
-    
-    @AfterClass
-    public static void endclose() throws Exception {
-    	cfg.endUp();    	
-    }
-    
-     
+	private static Configuracion cfg;
+	private static UsuarioDao usuDao;
+
+	@Rule
+	public TestRule watcher = new TestWatcher() {
+		protected void starting(Description description) {
+			log.info("");
+			log.info("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+			log.info("Iniciando test: " + description.getMethodName());
+			log.info("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+		}
+
+		protected void finished(Description description) {
+			log.info("");
+			log.info("-----------------------------------------------------------------------------------------------------------------------------------------");
+			log.info("Finalizado test: " + description.getMethodName());
+			log.info("-----------------------------------------------------------------------------------------------------------------------------------------");
+		}
+	};
+
+	@BeforeClass
+	public static void init() throws Exception {
+		cfg = new ConfiguracionJPA();
+		cfg.start();
+
+		usuDao = new UsuarioDaoJPA();
+		usuDao.setup(cfg);
+
+		produtorDatos = new ProdutorDatosProba();
+		produtorDatos.Setup(cfg);
+	}
+
+	@AfterClass
+	public static void endclose() throws Exception {
+		cfg.endUp();
+	}
+
+
 	@Before
-	public void setUp() throws Exception {		
-		log.info("");	
+	public void setUp() throws Exception {
+		log.info("");
 		log.info("Limpando BD --------------------------------------------------------------------------------------------");
 		produtorDatos.limpaBD();
 	}
@@ -78,29 +79,32 @@ public class Test1_Usuarios {
 	@After
 	public void tearDown() throws Exception {
 	}
-	
 
-    @Test 
-    public void t1_CRUD_TestAlmacena() {
 
-    	log.info("");	
+	@Test
+	public void t1_CRUD_TestAlmacena() {
+
+		log.info("");
 		log.info("Configurando situación de partida do test -----------------------------------------------------------------------");
-  
+
 		produtorDatos.creaUsuariosSoltos();
-    	
-    	log.info("");	
+
+		log.info("");
 		log.info("Inicio do test --------------------------------------------------------------------------------------------------");
-    	log.info("Obxectivo: Proba de gravación na BD de novo usuario (sen entradas de log asociadas)\n");
-    	
-    	// Situación de partida:
-    	// u0 transitorio    	
-    	
-    	Assert.assertNull(produtorDatos.u0.getId());
-    	usuDao.almacena(produtorDatos.u0);    	
-    	Assert.assertNotNull(produtorDatos.u0.getId());
-    }
-    
-    @Test 
+		log.info("Obxectivo: Proba de gravación na BD de novo usuario (sen entradas de log asociadas)\n");
+
+		// Situación de partida:
+		// u0 transitorio
+
+		System.out.printf(String.valueOf(produtorDatos.u0));
+		Assert.assertNull(produtorDatos.u0.getId());
+		usuDao.almacena(produtorDatos.u0);
+		System.out.printf(String.valueOf(produtorDatos.u0));
+		Assert.assertNotNull(produtorDatos.u0.getId());
+	}
+}
+/*
+    @Test
     public void t2_CRUD_TestRecupera() {
     	
     	Usuario u;
@@ -237,4 +241,4 @@ public class Test1_Usuarios {
     	Assert.assertTrue(excepcion);
     } 	
     
-}
+}*/

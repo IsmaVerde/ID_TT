@@ -6,20 +6,20 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
-@TableGenerator(name="GeneradorIdSocios", table="tabla_ids",
-        pkColumnName="nombre_id", pkColumnValue="idSocio",
+/*@TableGenerator(name="generadorIdSocios", table="tabla_ids",
+        pkColumnName="nombre_id", pkColumnValue="idSocios",
         valueColumnName="ultimo_valor_id",
-        initialValue=0, allocationSize=1)
+        initialValue=0, allocationSize=1)*/
 
-@NamedQueries ({
+/*@NamedQueries ({
         @NamedQuery (name="Socios.recuperaMuseos",
-                query="SELECT s,m FROM Socios s INNER JOIN s.museos m where s.idMuseo=:idMuseo"),
+                query="SELECT s,m FROM Socios s INNER JOIN s.museo m where s.idMuseo=:idMuseo"),
         @NamedQuery (name="Socios.recuperaSociosMinDosMuseos",
                 query="SELECT s FROM Socios s where (SELECT COUNT(m) FROM s.museos m) >=2")
-})
+})*/
 
 @Entity
-@Table(name = "socios_tcc")
+@Table(name = "t_socios_tcc")
 public class Socios extends Persona {
 
     @Column(nullable = false)
@@ -33,7 +33,7 @@ public class Socios extends Persona {
 
     @ElementCollection
     @CollectionTable (name="t_soc_descuento",joinColumns=@JoinColumn(name="id_soc",nullable=false))
-    @Column(name="descuento",nullable = false)
+    @Column(name="descuentos",nullable = false)
     private List<String> descuentos;
 
     @ManyToMany (cascade={}, fetch=FetchType.EAGER)
@@ -98,5 +98,17 @@ public class Socios extends Persona {
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), tipo, profesion, procedencia, descuentos, museos);
+    }
+
+    @Override
+    public String toString() {
+        Socios s =new Socios();
+        return super.toString() +
+                ", tipo=" + tipo +
+                ", profesion='" + profesion+ '\'' +
+                ", procedencia='" + procedencia + '\'' +
+                ", descuentos='" + descuentos + '\''+
+                ", museos='" + museos + '\''+
+                "}";
     }
 }

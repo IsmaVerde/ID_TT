@@ -5,17 +5,17 @@ import java.time.LocalDate;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-@TableGenerator(name="xeradorIdsUsuarios", table="taboa_ids",
+@TableGenerator(name="xeradorIdsUsuarios", table="taboa_idsD",
 pkColumnName="nome_id", pkColumnValue="idUsuario",
 valueColumnName="ultimo_valor_id",
 initialValue=0, allocationSize=1)
 
-@NamedQueries ({
+/*@NamedQueries ({
 	@NamedQuery (name="Usuario.recuperaPorNif",
 				 query="SELECT u FROM Usuario u where u.nif=:nif"),
 	@NamedQuery (name="Usuario.recuperaTodos",
 				 query="SELECT u FROM Usuario u ORDER BY u.nif")
-})
+})*/
 
 @Entity
 public class Usuario {

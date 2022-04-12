@@ -5,10 +5,6 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
-import gei.id.tutelado.model.Empleados;
-import gei.id.tutelado.model.Usuario;
-import org.hibernate.LazyInitializationException;
-
 import gei.id.tutelado.configuracion.Configuracion;
 import gei.id.tutelado.model.Persona;
 
@@ -24,13 +20,15 @@ public abstract class PersonaDaoJPA implements PersonaDao {
     }
 
     @Override
-    public Persona alta(Persona persona) {
+    public void alta(Persona persona) {
 
         try {
+
             em = emf.createEntityManager();
             em.getTransaction().begin();
 
             em.persist(persona);
+
 
             em.getTransaction().commit();
             em.close();
@@ -42,7 +40,7 @@ public abstract class PersonaDaoJPA implements PersonaDao {
                 throw (ex);
             }
         }
-        return persona;
+        System.out.println(persona);
     }
 
     @Override

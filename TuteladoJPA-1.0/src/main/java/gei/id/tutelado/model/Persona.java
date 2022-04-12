@@ -3,6 +3,10 @@ package gei.id.tutelado.model;
 import java.util.Objects;
 import javax.persistence.*;
 
+@TableGenerator(name="generadorIdsPersona", table="tabla_ids",
+        pkColumnName="nombre_id", pkColumnValue="idPersona",
+        valueColumnName="ultimo_valor_id",
+        initialValue=0, allocationSize=1)
 
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
@@ -71,7 +75,6 @@ public abstract class Persona{
                 "id=" + id +
                 ", dni='" + dni + '\'' +
                 ", nombrecompleto='" + nombrecompleto + '\'' +
-                ", email='" + email + '\'' +
-                '}';
+                ", email='" + email + '\'';
     }
 }

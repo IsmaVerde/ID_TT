@@ -4,14 +4,16 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @TableGenerator(name="generadorIdsEmpleado", table="tabla_ids",
-        pkColumnName="nombre_id", pkColumnValue="idEmpleado",
+        pkColumnName="nombre_id", pkColumnValue="idEmpleados",
         valueColumnName="ultimo_valor_id",
         initialValue=0, allocationSize=1)
 
+/*
 @NamedQueries({
-        @NamedQuery(name="Empleado.recuperaSueldoMedio",
-                query="SELECT e,avg(sal) FROM Empleado e")
+        @NamedQuery(name="Empleados.recuperaSueldoMedio",
+                query="SELECT e,avg(sal) FROM Empleados e")
 })
+*/
 
 @Entity
 @Table(name = "t_empleados_tcc")
@@ -27,7 +29,7 @@ public class Empleados extends Persona {
     private String experiencia;
 
     @ManyToOne (fetch=FetchType.LAZY, cascade={} )
-    @JoinColumn (name="museo_emp", nullable = false)
+    @JoinColumn (name="museo_emp", nullable=false)
     private Museo museo;
 
     public String getPuesto() {
@@ -58,7 +60,7 @@ public class Empleados extends Persona {
         return museo;
     }
 
-    public void setMuseo(Museo Museo) {
+    public void setMuseo(Museo museo) {
         this.museo = museo;
     }
 
