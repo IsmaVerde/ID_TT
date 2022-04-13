@@ -30,6 +30,7 @@ public abstract class PersonaDaoJPA implements PersonaDao {
             em.persist(persona);
 
 
+
             em.getTransaction().commit();
             em.close();
 

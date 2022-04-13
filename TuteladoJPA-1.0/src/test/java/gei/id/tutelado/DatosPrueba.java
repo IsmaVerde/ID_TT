@@ -232,7 +232,42 @@ public class DatosPrueba {
 
 	}
 
-	public void gravaSocios() {
+	public void creaMuseoconInscritos () {
+		this.crearMuseosSueltos();
+		this.crearSociosSueltos();
+
+		this.m0.agregarSocios(this.s0);
+		this.m0.agregarSocios(this.s1);
+		this.m0.agregarSocios(this.s2);
+		this.m0.agregarSocios(this.s4);
+
+		this.m1.agregarSocios(this.s1);
+		this.m1.agregarSocios(this.s4);
+
+		this.m2.agregarSocios(this.s0);
+		this.m2.agregarSocios(this.s3);
+	}
+
+	public void creaMuseoconEmpleados () {
+		this.crearMuseosSueltos();
+		this.crearEmpleadosSueltos();
+
+		this.m0.agregarEmpleado(this.e0);
+		this.m0.agregarEmpleado(this.e3);
+		this.m0.agregarEmpleado(this.e4);
+
+		this.m1.agregarEmpleado(this.e1);
+
+		this.m2.agregarEmpleado(this.e2);
+	}
+
+	public void creaMuseoCompleto () {
+		creaMuseoconInscritos();
+		creaMuseoconEmpleados();
+	}
+
+
+	public void grabaSocios() {
 		EntityManager em=null;
 		try {
 			em = emf.createEntityManager();
@@ -254,7 +289,7 @@ public class DatosPrueba {
 		}	
 	}
 
-	public void gravaEmpleados() {
+	public void grabaEmpleados() {
 		EntityManager em=null;
 		try {
 			em = emf.createEntityManager();
@@ -277,7 +312,7 @@ public class DatosPrueba {
 		}
 	}
 
-	public void gravaMuseos() {
+	public void grabaMuseos() {
 		EntityManager em=null;
 		try {
 			em = emf.createEntityManager();

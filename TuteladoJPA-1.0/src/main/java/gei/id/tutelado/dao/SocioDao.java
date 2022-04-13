@@ -12,6 +12,7 @@ public interface SocioDao extends PersonaDao {
     void setup (Configuracion config);
 
     List<Socios> recuperaMuseos(Long socio);
+    Socios recuperaPorDni(Long dni);
     List<Socios> recuperaSociosMinDosMuseos();
 
 }

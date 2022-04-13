@@ -2,8 +2,7 @@ package gei.id.tutelado;
 
 import gei.id.tutelado.configuracion.Configuracion;
 import gei.id.tutelado.configuracion.ConfiguracionJPA;
-import gei.id.tutelado.dao.MuseoDao;
-import gei.id.tutelado.dao.MuseoDaoJPA;
+import gei.id.tutelado.model.Empleados;
 import gei.id.tutelado.dao.EmpleadoDao;
 import gei.id.tutelado.dao.EmpleadoDaoJPA;
 import org.apache.logging.log4j.LogManager;
@@ -18,113 +17,113 @@ import org.junit.runners.MethodSorters;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class Test1_Empleados {
 
-    private Logger log = LogManager.getLogger("gei.id.tutelado");
+	private Logger log = LogManager.getLogger("gei.id.tutelado");
 
-    private static DatosPrueba productoDatosPrueba = new DatosPrueba();
-    
-    private static Configuracion cfg;
-    private static EmpleadoDao empDao;
-    
-    @Rule
-    public TestRule watcher = new TestWatcher() {
-       protected void starting(Description description) {
-    	   log.info("");
-    	   log.info("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
-    	   log.info("Iniciando test Empleados: " + description.getMethodName());
-    	   log.info("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
-       }
-       protected void finished(Description description) {
-    	   log.info("");
-    	   log.info("-----------------------------------------------------------------------------------------------------------------------------------------");
-    	   log.info("Finalizado test" + description.getMethodName());
-    	   log.info("-----------------------------------------------------------------------------------------------------------------------------------------");
-       }
-    };
-    
-    @BeforeClass
-    public static void init() throws Exception {
-    	cfg = new ConfiguracionJPA();
-    	cfg.start();
+	private static DatosPrueba productoDatosPrueba = new DatosPrueba();
 
-    	empDao = new EmpleadoDaoJPA();
-		
-    	empDao.setup(cfg);
-    	
-    	productoDatosPrueba = new DatosPrueba();
-    	productoDatosPrueba.Setup(cfg);
-    }
-    
-    @AfterClass
-    public static void endclose() throws Exception {
-    	cfg.endUp();    	
-    }
-    
-     
+	private static Configuracion cfg;
+	private static EmpleadoDao empDao;
+
+	@Rule
+	public TestRule watcher = new TestWatcher() {
+		protected void starting(Description description) {
+			log.info("");
+			log.info("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+			log.info("Iniciando test Empleados: " + description.getMethodName());
+			log.info("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+		}
+		protected void finished(Description description) {
+			log.info("");
+			log.info("-----------------------------------------------------------------------------------------------------------------------------------------");
+			log.info("Finalizado test" + description.getMethodName());
+			log.info("-----------------------------------------------------------------------------------------------------------------------------------------");
+		}
+	};
+
+	@BeforeClass
+	public static void init() throws Exception {
+		cfg = new ConfiguracionJPA();
+		cfg.start();
+
+		empDao = new EmpleadoDaoJPA();
+
+		empDao.setup(cfg);
+
+		productoDatosPrueba = new DatosPrueba();
+		productoDatosPrueba.Setup(cfg);
+	}
+
+	@AfterClass
+	public static void endclose() throws Exception {
+		cfg.endUp();
+	}
+
+
 	@Before
-	public void setUp() throws Exception {		
-		log.info("");	
-		log.info("Limpando BD --------------------------------------------------------------------------------------------");
+	public void setUp() throws Exception {
+		log.info("");
+		log.info("Limpiando BD --------------------------------------------------------------------------------------------");
 		productoDatosPrueba.limpaBD();
 	}
 
 	@After
 	public void tearDown() throws Exception {
 	}
-	
 
-    @Test 
-    public void t1_CRUD_TestAlta() {
 
-    	log.info("");	
-		log.info("Configurando situación de partida do test -----------------------------------------------------------------------");
-  
-		productoDatosPrueba.crearSociosSueltos();
-    	
-    	log.info("");	
-		log.info("Inicio do test --------------------------------------------------------------------------------------------------");
-    	log.info("Obxectivo: Proba de gravación na BD de novo empleado (sen entradas de log asociadas)\n");
-    	
-    	// Situación de partida:
-    	// s0 transitorio
+	@Test
+	public void t1_CRUD_TestAlta() {
+
+		log.info("");
+		log.info("Configurando situación de partida del test -----------------------------------------------------------------------");
+
+		productoDatosPrueba.crearEmpleadosSueltos();
+
+		log.info("");
+		log.info("Inicio del test --------------------------------------------------------------------------------------------------");
+		log.info("Objetivo: Prueba de grabación en la BD de nuevo empleado (sin museos asociados)\n");
+
+		// Situación de partida:
+		// e0 transitorio
 
 		System.out.println(productoDatosPrueba.e0);
 		empDao.alta(productoDatosPrueba.e0);
-    	Assert.assertNotNull(productoDatosPrueba.e0.getId());
-    }
+		Assert.assertNotNull(productoDatosPrueba.e0.getId());
+	}
     
-/*    @Test
+    @Test
     public void t2_CRUD_TestRecupera() {
     	
-    	Socios s;
+    	Empleados e;
     	
     	log.info("");	
-		log.info("Configurando situación de partida do test -----------------------------------------------------------------------");
+		log.info("Configurando situación de partida del test -----------------------------------------------------------------------");
 
-		productoDatosPrueba.crearSociosSueltos();
-    	productoDatosPrueba.gravaSocios();
+		productoDatosPrueba.crearEmpleadosSueltos();
+    	productoDatosPrueba.grabaEmpleados();
     	
     	log.info("");	
-		log.info("Inicio do test --------------------------------------------------------------------------------------------------");
-    	log.info("Obxectivo: Proba de recuperación desde a BD de empleado (sen entradas asociadas) por nif\n"   
+		log.info("Inicio del test --------------------------------------------------------------------------------------------------");
+    	log.info("Objetivo: Pruba de recuperación desde la BD de socio (sin museos asociado) por dni\n"   
     			+ "\t\t\t\t Casos contemplados:\n"
-    			+ "\t\t\t\t a) Recuperación por nif existente\n"
-    			+ "\t\t\t\t b) Recuperacion por nif inexistente\n");
+    			+ "\t\t\t\t a) Recuperación por dni existente\n"
+    			+ "\t\t\t\t b) Recuperacion por dni inexistente\n");
 
     	// Situación de partida:
-    	// s0 desligado    	
+    	// e0 desligado    	
 
-    	log.info("Probando recuperacion por nif EXISTENTE --------------------------------------------------");
+    	log.info("Probando recuperacion por dni EXISTENTE --------------------------------------------------");
 
-    	s = (Socios) empDao.recuperaPorDni(productoDatosPrueba.s0.getDni());
-    	Assert.assertEquals(productoDatosPrueba.s0.getDni(),      s.getDni());
-    	Assert.assertEquals(productoDatosPrueba.s0.getNombrecompleto(),     s.getNombrecompleto());
-		Assert.assertEquals(productoDatosPrueba.s0.getEmail(),     s.getEmail());
+    	e = (Empleados) empDao.recuperaPorDni(productoDatosPrueba.e0.getDni());
+    	Assert.assertEquals(productoDatosPrueba.e0.getDni(),      e.getDni());
+    	Assert.assertEquals(productoDatosPrueba.e0.getNombrecompleto(),     e.getNombrecompleto());
+		Assert.assertEquals(productoDatosPrueba.e0.getEmail(),     e.getEmail());
 
     	log.info("");	
-		log.info("Probando recuperacion por nif INEXISTENTE -----------------------------------------------");
+		log.info("Probando recuperacion por dni INEXISTENTE -----------------------------------------------");
     	
-    	s = (Socios) empDao.recuperaPorDni("iwbvyhuebvuwebvi");
-    	Assert.assertNull (s);
+    	e = (Empleados) empDao.recuperaPorDni("DniInvalido");
+    	Assert.assertNull (e);
 
     } 	
 
@@ -132,53 +131,53 @@ public class Test1_Empleados {
     public void t3_CRUD_TestElimina() {
     	
     	log.info("");	
-		log.info("Configurando situación de partida do test -----------------------------------------------------------------------");
+		log.info("Configurando situación de partida del test -----------------------------------------------------------------------");
 
-		productoDatosPrueba.crearSociosSueltos();
-    	productoDatosPrueba.gravaSocios();
+		productoDatosPrueba.crearEmpleadosSueltos();
+    	productoDatosPrueba.grabaEmpleados();
 
     	
     	log.info("");	
-		log.info("Inicio do test --------------------------------------------------------------------------------------------------");
-    	log.info("Obxectivo: Proba de eliminación da BD de empleado sen entradas asociadas\n");   
+		log.info("Inicio del test --------------------------------------------------------------------------------------------------");
+    	log.info("Objetivo: Prueba de eliminación de la BD de socio sin museos asociados\n");   
  
     	// Situación de partida:
-    	// s0 desligado  
+    	// e0 desligado  
 
-    	Assert.assertNotNull(empDao.recuperaPorDni(productoDatosPrueba.s0.getDni()));
-    	empDao.elimina(productoDatosPrueba.s0);    	
-    	Assert.assertNull(empDao.recuperaPorDni(productoDatosPrueba.s0.getDni()));
+    	Assert.assertNotNull(empDao.recuperaPorDni(productoDatosPrueba.e0.getDni()));
+    	empDao.elimina(productoDatosPrueba.e0);    	
+    	Assert.assertNull(empDao.recuperaPorDni(productoDatosPrueba.e0.getDni()));
     } 	
 
     @Test 
     public void t4_CRUD_TestModifica() {
     	
-    	Socios s1, s2;
-    	String novoNome;
+    	Empleados e1, e2;
+    	String nuevoNombre;
     	
     	log.info("");	
-		log.info("Configurando situación de partida do test -----------------------------------------------------------------------");
+		log.info("Configurando situación de partida del test -----------------------------------------------------------------------");
 
-		productoDatosPrueba.crearSociosSueltos();
-    	productoDatosPrueba.gravaSocios();
+		productoDatosPrueba.crearEmpleadosSueltos();
+    	productoDatosPrueba.grabaEmpleados();
 
     	log.info("");	
-		log.info("Inicio do test --------------------------------------------------------------------------------------------------");
-    	log.info("Obxectivo: Proba de modificación da información básica dun empleado sen entradas de log\n");
+		log.info("Inicio del test --------------------------------------------------------------------------------------------------");
+    	log.info("Objetivo: Prueba de modificación de la información básica de un socio sin museos\n");
 
     	// Situación de partida:
-    	// s0 desligado  
+    	// e0 desligado  
 
-		novoNome = new String ("Nome novo");
+		nuevoNombre = new String ("Nombre nuevo");
 
-		s1 = (Socios) empDao.recuperaPorDni(productoDatosPrueba.s0.getDni());
-		Assert.assertNotEquals(novoNome, s1.getNombrecompleto());
-    	s1.setNombrecompleto(novoNome);
+		e1 = (Empleados) empDao.recuperaPorDni(productoDatosPrueba.e0.getDni());
+		Assert.assertNotEquals(nuevoNombre, e1.getNombrecompleto());
+    	e1.setNombrecompleto(nuevoNombre);
 
-    	empDao.modifica(s1);    	
+    	empDao.modifica(e1);    	
     	
-		s2 = (Socios) empDao.recuperaPorDni(productoDatosPrueba.s0.getDni());
-		Assert.assertEquals (novoNome, s2.getNombrecompleto());
+		e2 = (Empleados) empDao.recuperaPorDni(productoDatosPrueba.e0.getDni());
+		Assert.assertEquals (nuevoNombre, e2.getNombrecompleto());
 
     } 	
     
@@ -189,25 +188,25 @@ public class Test1_Empleados {
     	Boolean excepcion;
     	
     	log.info("");	
-		log.info("Configurando situación de partida do test -----------------------------------------------------------------------");
+		log.info("Configurando situación de partida del test -----------------------------------------------------------------------");
 
-		productoDatosPrueba.crearSociosSueltos();
-    	empDao.alta(productoDatosPrueba.s0);
+		productoDatosPrueba.crearEmpleadosSueltos();
+    	empDao.alta(productoDatosPrueba.e0);
     	
     	log.info("");	
-		log.info("Inicio do test --------------------------------------------------------------------------------------------------");
-    	log.info("Obxectivo: Proba de violación de restricións not null e unique\n"   
+		log.info("Inicio del test --------------------------------------------------------------------------------------------------");
+    	log.info("Objetivo: Prueba de violación de restricións not null y unique\n"   
     			+ "\t\t\t\t Casos contemplados:\n"
-    			+ "\t\t\t\t a) Gravación de empleado con nif duplicado\n"
-    			+ "\t\t\t\t b) Gravación de empleado con nif nulo\n");
+    			+ "\t\t\t\t a) Grabación de socio con dni duplicado\n"
+    			+ "\t\t\t\t b) Grabación de socio con dni nulo\n");
 
     	// Situación de partida:
-    	// s0 desligado, s1 transitorio
+    	// e0 desligado, e1 transitorio
     	
-		log.info("Probando gravacion de empleado con Nif duplicado -----------------------------------------------");
-    	productoDatosPrueba.s1.setDni(productoDatosPrueba.s0.getDni());
+		log.info("Probando grabación de socio con Nif duplicado -----------------------------------------------");
+    	productoDatosPrueba.e1.setDni(productoDatosPrueba.e0.getDni());
     	try {
-        	empDao.alta(productoDatosPrueba.s1);
+        	empDao.alta(productoDatosPrueba.e1);
         	excepcion=false;
     	} catch (Exception ex) {
     		excepcion=true;
@@ -217,16 +216,16 @@ public class Test1_Empleados {
     	
     	// Nif nulo
     	log.info("");	
-		log.info("Probando gravacion de empleado con Nif nulo ----------------------------------------------------");
-    	productoDatosPrueba.s1.setDni(null);
+		log.info("Probando grabación de socio con Nif nulo ----------------------------------------------------");
+    	productoDatosPrueba.e1.setDni(null);
     	try {
-        	empDao.alta(productoDatosPrueba.s1);
+        	empDao.alta(productoDatosPrueba.e1);
         	excepcion=false;
     	} catch (Exception ex) {
     		excepcion=true;
     		log.info(ex.getClass().getName());
     	}
     	Assert.assertTrue(excepcion);
-    } 	*/
+    }
     
 }

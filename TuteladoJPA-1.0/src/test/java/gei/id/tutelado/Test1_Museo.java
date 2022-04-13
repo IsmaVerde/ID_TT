@@ -97,7 +97,7 @@ public class Test1_Museo {
 		log.info("Configurando situación de partida del test -----------------------------------------------------------------------");
 
 		productorDatos.crearMuseosSueltos();
-		productorDatos.gravaMuseos();
+		productorDatos.grabaMuseos();
 
 		log.info("");
 		log.info("Inicio del test --------------------------------------------------------------------------------------------------");
@@ -128,7 +128,7 @@ public class Test1_Museo {
 		log.info("Configurando situación de partida do test -----------------------------------------------------------------------");
 
 		productorDatos.crearMuseosSueltos();
-		productorDatos.gravaMuseos();
+		productorDatos.grabaMuseos();
 
 
 		log.info("");
@@ -153,7 +153,7 @@ public class Test1_Museo {
 		log.info("Configurando situación de partida del test -----------------------------------------------------------------------");
 
 		productorDatos.crearMuseosSueltos();
-		productorDatos.gravaMuseos();
+		productorDatos.grabaMuseos();
 
 		log.info("");
 		log.info("Inicio del test --------------------------------------------------------------------------------------------------");

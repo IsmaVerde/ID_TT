@@ -8,12 +8,14 @@ import java.util.Objects;
         valueColumnName="ultimo_valor_id",
         initialValue=0, allocationSize=1)
 
-/*
+
 @NamedQueries({
-        @NamedQuery(name="Empleados.recuperaSueldoMedio",
-                query="SELECT e,avg(sal) FROM Empleados e")
+        /*@NamedQuery(name="Empleados.recuperaSueldoMedio",
+                query="SELECT e,avg(sal) FROM Empleados e"),*/
+        @NamedQuery (name="Empleados.recuperaPorDni",
+                query="SELECT e FROM Empleados e where e.dni=:dni")
 })
-*/
+
 
 @Entity
 @Table(name = "t_empleados_tcc")

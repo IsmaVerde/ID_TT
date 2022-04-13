@@ -11,16 +11,19 @@ import java.util.Set;
         valueColumnName="ultimo_valor_id",
         initialValue=0, allocationSize=1)*/
 
-/*@NamedQueries ({
-        @NamedQuery (name="Socios.recuperaMuseos",
+@NamedQueries ({
+/*        @NamedQuery (name="Socios.recuperaMuseos",
                 query="SELECT s,m FROM Socios s INNER JOIN s.museo m where s.idMuseo=:idMuseo"),
         @NamedQuery (name="Socios.recuperaSociosMinDosMuseos",
-                query="SELECT s FROM Socios s where (SELECT COUNT(m) FROM s.museos m) >=2")
-})*/
+                query="SELECT s FROM Socios s where (SELECT COUNT(m) FROM s.museos m) >=2"),*/
+        @NamedQuery (name="Socios.recuperaPorDni",
+                query="SELECT s FROM Socios s where s.dni=:dni")
+})
 
 @Entity
 @Table(name = "t_socios_tcc")
 public class Socios extends Persona {
+
 
     @Column(nullable = false)
     private String tipo;

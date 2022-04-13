@@ -15,7 +15,7 @@ import java.util.Set;
        /* @NamedQuery(name="Museo.recuperaExperiencia",
                 query="SELECT m,e.name,e.experiencia FROM Museo m LEFT OUTER JOIN m.empleados e"),*/
         @NamedQuery (name="Museo.recuperaPorNombre",
-                query="SELECT m FROM Museo m where m.nombre=:nombre"),
+                query="SELECT m FROM Museo m where m.nombre=:nombre")
 })
 
 @Entity
@@ -85,6 +85,18 @@ public class Museo {
 
     public void setEmpleados(Set<Empleados> empleados) {
         this.empleados = empleados;
+    }
+
+    public void agregarSocios(Socios socios) {
+        if (socios.getMuseos() != null) throw new RuntimeException ("");
+        socios.getMuseos().add(this);
+        this.inscritos.add(socios);
+    }
+
+    public void agregarEmpleado(Empleados empleados) {
+        if (empleados.getMuseo() != null) throw new RuntimeException ("");
+        empleados.setMuseo(this);
+        this.empleados.add(empleados);
     }
 
     @Override

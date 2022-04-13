@@ -2,6 +2,7 @@ package gei.id.tutelado.dao;
 
 import gei.id.tutelado.configuracion.Configuracion;
 import gei.id.tutelado.model.Empleados;
+import gei.id.tutelado.model.Socios;
 
 
 import javax.persistence.EntityManager;
@@ -41,6 +42,30 @@ public class EmpleadoDaoJPA extends PersonaDaoJPA implements EmpleadoDao {
 
         return (empleado);
 
+    }
+
+    @Override
+    public Empleados recuperaPorDni(Long dni) {
+        List<Empleados> empleados = null;
+
+        try {
+            em = emf.createEntityManager();
+            em.getTransaction().begin();
+
+            empleados = em.createNamedQuery("Empleados.recuperaPorDni", Empleados.class).setParameter("dni", dni).getResultList();
+
+            em.getTransaction().commit();
+            em.close();
+
+        } catch (Exception ex) {
+            if (em != null && em.isOpen()) {
+                if (em.getTransaction().isActive()) em.getTransaction().rollback();
+                em.close();
+                throw (ex);
+            }
+        }
+
+        return (empleados.size() != 0 ? empleados.get(0) : null);
     }
 
     @Override
