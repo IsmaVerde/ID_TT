@@ -6,10 +6,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
 import gei.id.tutelado.model.Museo;
+import gei.id.tutelado.model.Socios;
 import org.hibernate.LazyInitializationException;
 
 import gei.id.tutelado.configuracion.Configuracion;
-import gei.id.tutelado.model.Museo;
 
 
 public class MuseoDaoJPA implements MuseoDao {
@@ -26,6 +26,7 @@ public class MuseoDaoJPA implements MuseoDao {
     public Museo alta(Museo museo) {
 
         try {
+
             em = emf.createEntityManager();
             em.getTransaction().begin();
 
@@ -95,6 +96,7 @@ public class MuseoDaoJPA implements MuseoDao {
         List<Museo> museos = null;
 
         try {
+
             em = emf.createEntityManager();
             em.getTransaction().begin();
 
@@ -118,6 +120,7 @@ public class MuseoDaoJPA implements MuseoDao {
     public Museo restauraSocios (Museo museo){
 
         try {
+
             em = emf.createEntityManager();
             em.getTransaction().begin();
 
@@ -189,14 +192,14 @@ public class MuseoDaoJPA implements MuseoDao {
     }
 
     @Override
-    public List<Museo> recuperaExperiencia(){
-        List <Museo> museos=null;
+    public List<Socios> recuperaSociosSinMuseo(){
+        List <Socios> socios=null;
 
         try {
             em = emf.createEntityManager();
             em.getTransaction().begin();
 
-            museos = em.createNamedQuery("Museo.recuperaExperiencia", Museo.class).getResultList();
+            socios = em.createNamedQuery("Museo.recuperaSociosSinMuseo", Socios.class).getResultList();
 
             em.getTransaction().commit();
             em.close();
@@ -210,7 +213,7 @@ public class MuseoDaoJPA implements MuseoDao {
             }
         }
 
-        return museos;
+        return socios;
     }
     
 }

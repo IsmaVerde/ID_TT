@@ -2,8 +2,8 @@ package gei.id.tutelado;
 
 import gei.id.tutelado.configuracion.Configuracion;
 import gei.id.tutelado.configuracion.ConfiguracionJPA;
-import gei.id.tutelado.dao.SocioDao;
-import gei.id.tutelado.dao.SocioDaoJPA;
+import gei.id.tutelado.dao.PersonaDao;
+import gei.id.tutelado.dao.PersonaDaoJPA;
 import gei.id.tutelado.model.Socios;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -12,8 +12,6 @@ import org.junit.rules.TestRule;
 import org.junit.rules.TestWatcher;
 import org.junit.runner.Description;
 import org.junit.runners.MethodSorters;
-
-import java.util.Optional;
 
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -24,7 +22,7 @@ public class Test1_Socios {
     private static DatosPrueba productoDatosPrueba = new DatosPrueba();
     
     private static Configuracion cfg;
-    private static SocioDao socDao;
+    private static PersonaDao socDao;
     
     @Rule
     public TestRule watcher = new TestWatcher() {
@@ -47,7 +45,7 @@ public class Test1_Socios {
     	cfg = new ConfiguracionJPA();
     	cfg.start();
 
-    	socDao = new SocioDaoJPA();
+    	socDao = new PersonaDaoJPA();
     	socDao.setup(cfg);
     	
     	productoDatosPrueba = new DatosPrueba();
@@ -86,9 +84,8 @@ public class Test1_Socios {
     	
     	// Situación de partida:
     	// s0 transitorio
-		productoDatosPrueba.crearMuseosSueltos();
 
-		System.out.println(productoDatosPrueba.s2);
+
 		socDao.alta(productoDatosPrueba.s2);
     	Assert.assertNotNull(productoDatosPrueba.s2.getId());
     }

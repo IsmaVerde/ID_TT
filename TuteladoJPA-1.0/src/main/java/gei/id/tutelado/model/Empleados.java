@@ -3,15 +3,9 @@ package gei.id.tutelado.model;
 import javax.persistence.*;
 import java.util.Objects;
 
-@TableGenerator(name="generadorIdsEmpleado", table="tabla_ids",
-        pkColumnName="nombre_id", pkColumnValue="idEmpleados",
-        valueColumnName="ultimo_valor_id",
-        initialValue=0, allocationSize=1)
-
-
 @NamedQueries({
-        /*@NamedQuery(name="Empleados.recuperaSueldoMedio",
-                query="SELECT e,avg(sal) FROM Empleados e"),*/
+        @NamedQuery(name="Empleados.recuperaSueldoMedio",
+                query="SELECT avg(sueldo) FROM Empleados e"),
         @NamedQuery (name="Empleados.recuperaPorDni",
                 query="SELECT e FROM Empleados e where e.dni=:dni")
 })
@@ -68,11 +62,14 @@ public class Empleados extends Persona {
 
     @Override
     public String toString() {
-        return "Empleados{" +
-                "puesto='" + puesto + '\'' +
+        return "Empleado{" +
+                "id=" + getId() +
+                ", dni='" + getDni() + '\'' +
+                ", nombre completo='" + getNombrecompleto() + '\'' +
+                ", email='" + getEmail() + '\''+
+                ", puesto='" + puesto + '\'' +
                 ", sueldo=" + sueldo +
                 ", experiencia='" + experiencia + '\'' +
-                ", museo=" + museo +
                 '}';
     }
 }

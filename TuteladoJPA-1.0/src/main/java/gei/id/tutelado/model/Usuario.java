@@ -112,7 +112,7 @@ public class Usuario {
 
 	@Override
 	public String toString() {
-		return "suario [id=" + id + ", nif=" + nif + ", nome=" + nome + ", dataAlta=" + dataAlta + "]";
+		return "Usuario [id=" + id + ", nif=" + nif + ", nome=" + nome + ", dataAlta=" + dataAlta + "]";
 	}
 
     

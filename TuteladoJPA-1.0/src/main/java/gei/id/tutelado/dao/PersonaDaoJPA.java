@@ -6,10 +6,12 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
 import gei.id.tutelado.configuracion.Configuracion;
+import gei.id.tutelado.model.Empleados;
 import gei.id.tutelado.model.Persona;
+import gei.id.tutelado.model.Socios;
 
 
-public abstract class PersonaDaoJPA implements PersonaDao {
+public class PersonaDaoJPA implements PersonaDao {
 
     private EntityManagerFactory emf;
     private EntityManager em;
@@ -20,7 +22,7 @@ public abstract class PersonaDaoJPA implements PersonaDao {
     }
 
     @Override
-    public void alta(Persona persona) {
+    public Persona alta(Persona persona) {
 
         try {
 
@@ -34,6 +36,7 @@ public abstract class PersonaDaoJPA implements PersonaDao {
             em.getTransaction().commit();
             em.close();
 
+
         } catch (Exception ex) {
             if (em != null && em.isOpen()) {
                 if (em.getTransaction().isActive()) em.getTransaction().rollback();
@@ -41,7 +44,7 @@ public abstract class PersonaDaoJPA implements PersonaDao {
                 throw (ex);
             }
         }
-        System.out.println(persona);
+        return persona;
     }
 
     @Override
@@ -112,6 +115,106 @@ public abstract class PersonaDaoJPA implements PersonaDao {
         }
 
         return (personas.size() != 0 ? personas.get(0) : null);
+    }
+
+    @Override
+    public Empleados recuperaMuseo(Empleados empleado) {
+        // Devuelve un objeto empleado con su museos cargado (Si ne estaban cargados ya)
+
+        try {
+            em = emf.createEntityManager();
+            em.getTransaction().begin();
+
+            empleado = em.merge(empleado);
+
+            em.getTransaction().commit();
+            em.close();
+        } catch (Exception ex) {
+            if (em != null && em.isOpen()) {
+                if (em.getTransaction().isActive()) em.getTransaction().rollback();
+                em.close();
+                throw (ex);
+            }
+        }
+
+        return (empleado);
+
+    }
+
+    @Override
+    public List<Double> recuperaSueldoMedio() {
+        List<Double> salarios=null;
+
+        try {
+            em = emf.createEntityManager();
+            em.getTransaction().begin();
+
+            salarios = em.createNamedQuery("Empleados.recuperaSueldoMedio", Double.class).getResultList();
+
+            em.getTransaction().commit();
+            em.close();
+
+        }
+        catch (Exception ex ) {
+            if (em!=null && em.isOpen()) {
+                if (em.getTransaction().isActive()) em.getTransaction().rollback();
+                em.close();
+                throw(ex);
+            }
+        }
+
+        return salarios;
+    }
+
+    @Override
+    public List<Socios> recuperaMuseos(Long idSocio) {
+        List <Socios> socios=null;
+
+        try {
+            em = emf.createEntityManager();
+            em.getTransaction().begin();
+
+            socios = em.createNamedQuery("Socios.recuperaMuseos", Socios.class)
+                    .setParameter("idSocio", idSocio).getResultList();
+
+            em.getTransaction().commit();
+            em.close();
+
+        }
+        catch (Exception ex ) {
+            if (em!=null && em.isOpen()) {
+                if (em.getTransaction().isActive()) em.getTransaction().rollback();
+                em.close();
+                throw(ex);
+            }
+        }
+
+        return socios;
+    }
+
+    @Override
+    public List<Socios> recuperaSociosMinDosMuseos() {
+        List <Socios> socios=null;
+
+        try {
+            em = emf.createEntityManager();
+            em.getTransaction().begin();
+
+            socios = em.createNamedQuery("Socios.recuperaSociosMinDosMuseos", Socios.class).getResultList();
+
+            em.getTransaction().commit();
+            em.close();
+
+        }
+        catch (Exception ex ) {
+            if (em!=null && em.isOpen()) {
+                if (em.getTransaction().isActive()) em.getTransaction().rollback();
+                em.close();
+                throw(ex);
+            }
+        }
+
+        return socios;
     }
 
 

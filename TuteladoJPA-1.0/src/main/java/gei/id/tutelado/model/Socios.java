@@ -2,20 +2,14 @@ package gei.id.tutelado.model;
 
 import javax.persistence.*;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
-/*@TableGenerator(name="generadorIdSocios", table="tabla_ids",
-        pkColumnName="nombre_id", pkColumnValue="idSocios",
-        valueColumnName="ultimo_valor_id",
-        initialValue=0, allocationSize=1)*/
-
 @NamedQueries ({
-/*        @NamedQuery (name="Socios.recuperaMuseos",
-                query="SELECT s,m FROM Socios s INNER JOIN s.museo m where s.idMuseo=:idMuseo"),
+        @NamedQuery (name="Socios.recuperaMuseos",
+                query="SELECT s FROM Socios s INNER JOIN s.museos m where s.museos=:museos"),
         @NamedQuery (name="Socios.recuperaSociosMinDosMuseos",
-                query="SELECT s FROM Socios s where (SELECT COUNT(m) FROM s.museos m) >=2"),*/
+                query="SELECT s FROM Socios s where (SELECT COUNT(m) FROM s.museos m) >=2"),
         @NamedQuery (name="Socios.recuperaPorDni",
                 query="SELECT s FROM Socios s where s.dni=:dni")
 })
@@ -37,7 +31,7 @@ public class Socios extends Persona {
     @ElementCollection
     @CollectionTable (name="t_soc_descuento",joinColumns=@JoinColumn(name="id_soc",nullable=false))
     @Column(name="descuentos",nullable = false)
-    private List<String> descuentos;
+    private Set<String> descuentos;
 
     @ManyToMany (cascade={}, fetch=FetchType.EAGER)
     @JoinTable(name = "socio_museo",
@@ -69,11 +63,11 @@ public class Socios extends Persona {
         this.procedencia = procedencia;
     }
 
-    public List<String> getDescuentos() {
+    public Set<String> getDescuentos() {
         return descuentos;
     }
 
-    public void setDescuentos(List<String> descuentos) {
+    public void setDescuentos(Set<String> descuentos) {
         this.descuentos = descuentos;
     }
 
@@ -84,6 +78,7 @@ public class Socios extends Persona {
     public void setMuseos(Set<Museo> museos) {
         this.museos = museos;
     }
+
 
     @Override
     public boolean equals(Object o) {
@@ -105,13 +100,14 @@ public class Socios extends Persona {
 
     @Override
     public String toString() {
-        Socios s =new Socios();
-        return super.toString() +
-                ", tipo=" + tipo +
+        return "Socio{" +
+                "id=" + getId() +
+                ", dni='" + getDni() + '\'' +
+                ", nombre completo='" + getNombrecompleto() + '\'' +
+                ", email='" + getEmail() + '\''+
+                ", tipo='" + tipo + '\''+
                 ", profesion='" + profesion+ '\'' +
                 ", procedencia='" + procedencia + '\'' +
-                ", descuentos='" + descuentos + '\''+
-                ", museos='" + museos + '\''+
                 "}";
     }
 }

@@ -9,8 +9,6 @@ import javax.persistence.*;
         initialValue=0, allocationSize=1)
 
 @NamedQueries({
-       /* @NamedQuery(name="Museo.recuperaExperiencia",
-                query="SELECT m,e.name,e.experiencia FROM Museo m LEFT OUTER JOIN m.empleados e"),*/
         @NamedQuery (name="Persona.recuperaPorDni",
                 query="SELECT p FROM Persona p where p.dni=:dni")
 })

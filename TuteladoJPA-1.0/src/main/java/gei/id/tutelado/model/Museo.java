@@ -12,8 +12,8 @@ import java.util.Set;
         initialValue=0, allocationSize=1)
 
 @NamedQueries({
-       /* @NamedQuery(name="Museo.recuperaExperiencia",
-                query="SELECT m,e.name,e.experiencia FROM Museo m LEFT OUTER JOIN m.empleados e"),*/
+        @NamedQuery(name="Museo.recuperaSociosSinMuseo",
+                query="SELECT s FROM Museo m RIGHT OUTER JOIN m.inscritos s"),
         @NamedQuery (name="Museo.recuperaPorNombre",
                 query="SELECT m FROM Museo m where m.nombre=:nombre")
 })
@@ -21,7 +21,7 @@ import java.util.Set;
 @Entity
 public class Museo {
     @Id
-    @GeneratedValue (generator="generadorIdsMuseos")
+    @GeneratedValue (generator="generadorIdsMuseo")
     private Long idmuseo;
 
     @Column(nullable = false, unique = true)
@@ -36,8 +36,8 @@ public class Museo {
     @ManyToMany (mappedBy = "museos", fetch=FetchType.LAZY, cascade={})
     private Set<Socios> inscritos = new HashSet<Socios>();
 
-    @OneToMany (mappedBy = "museo" , fetch=FetchType.LAZY, cascade={CascadeType.MERGE, CascadeType.REMOVE})
-    private Set<Empleados> empleados;
+    @OneToMany (mappedBy = "museo" , fetch=FetchType.LAZY, cascade={CascadeType.REMOVE})
+    private Set<Empleados> Empleadosmuseo = new HashSet<Empleados>();
 
     public Long getIdmuseo() {
         return idmuseo;
@@ -80,23 +80,24 @@ public class Museo {
     }
 
     public Set<Empleados> getEmpleados() {
-        return empleados;
+        return Empleadosmuseo;
     }
 
-    public void setEmpleados(Set<Empleados> empleados) {
-        this.empleados = empleados;
+    public void setEmpleados(Set<Empleados> Empleadosmuseo) {
+        this.Empleadosmuseo = Empleadosmuseo;
     }
 
     public void agregarSocios(Socios socios) {
-        if (socios.getMuseos() != null) throw new RuntimeException ("");
-        socios.getMuseos().add(this);
+        Set<Museo> mus =socios.getMuseos();
+        mus.add(this);
+        socios.setMuseos(mus);
         this.inscritos.add(socios);
     }
 
     public void agregarEmpleado(Empleados empleados) {
         if (empleados.getMuseo() != null) throw new RuntimeException ("");
         empleados.setMuseo(this);
-        this.empleados.add(empleados);
+        this.Empleadosmuseo.add(empleados);
     }
 
     @Override
@@ -119,8 +120,6 @@ public class Museo {
                 ", nombre='" + nombre + '\'' +
                 ", ubicacion='" + ubicacion + '\'' +
                 ", categoria='" + categoria + '\'' +
-                ", inscritos=" + inscritos +
-                ", empleados=" + empleados +
                 '}';
     }
 }

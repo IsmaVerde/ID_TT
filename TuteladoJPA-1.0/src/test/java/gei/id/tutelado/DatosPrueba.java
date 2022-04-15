@@ -17,7 +17,7 @@ public class DatosPrueba {
 
 	private EntityManagerFactory emf=null;
 	
-	public Socios s0, s1, s2, s3, s4;
+	public Socios s0, s1, s2, s3, s4, s5;
 	public List<Socios> listadoS;
 
 	public Empleados e0, e1, e2, e3, e4;
@@ -33,28 +33,16 @@ public class DatosPrueba {
 	}
 	
 	public void crearSociosSueltos() {
-		List<String> desc0 = Arrays.asList("Carnet Joven");
-		List<String> desc1 = Arrays.asList();
-		List<String> desc2 = Arrays.asList("Carnet Joven", "Familia Numerosa");
-		List<String> desc3 = Arrays.asList("Tercera Edad");
-		List<String> desc4 = Arrays.asList("Carnet Joven", "Universitario");
 
-/*		Set<Museo> mus0 = new HashSet<Museo>();
-		Set<Museo> mus1 = new HashSet<Museo>();
-		Set<Museo> mus2 = new HashSet<Museo>();
-		Set<Museo> mus3 = new HashSet<Museo>();
-		Set<Museo> mus4 = new HashSet<Museo>();
+		Set<String> desc0 = new HashSet<String>(){{ add("Carnet Joven"); }};
 
-		mus0.add(m2);
-		mus0.add(m0);
-		mus1.add(m1);
-		mus1.add(m0);
-		mus2.add(m0);
-		mus3.add(m2);
-		mus4.add(m0);
-		mus4.add(m1);
-		mus4.add(m2);*/
+		Set<String> desc1 = new HashSet<String>(){{}};
 
+		Set<String> desc2 = new HashSet<String>(){{ add("Carnet Joven"); add("Familia Numerosa"); }};
+
+		Set<String> desc3 = new HashSet<String>(){{ add("Tercera Edad"); }};
+
+		Set<String> desc4 = new HashSet<String>(){{ add("Carnet Joven"); add("Universitario"); }};
 
 		this.s0 = new Socios();
         this.s0.setDni("0000");
@@ -64,7 +52,6 @@ public class DatosPrueba {
 		this.s0.setProfesion("Camarero");
 		this.s0.setProcedencia("Francia");
 		this.s0.setDescuentos(desc0);
-		this.s0.setMuseos(null);
 
 		this.s1 = new Socios();
 		this.s1.setDni("1111");
@@ -74,7 +61,6 @@ public class DatosPrueba {
 		this.s1.setProfesion("Profesor");
 		this.s1.setProcedencia("España");
 		this.s1.setDescuentos(desc1);
-		this.s1.setMuseos(null);
 
 		this.s2 = new Socios();
 		this.s2.setDni("2222");
@@ -84,7 +70,6 @@ public class DatosPrueba {
 		this.s2.setProfesion("Marinero");
 		this.s2.setProcedencia("España");
 		this.s2.setDescuentos(desc2);
-		this.s2.setMuseos(null);
 
 		this.s3 = new Socios();
 		this.s3.setDni("3333");
@@ -94,7 +79,6 @@ public class DatosPrueba {
 		this.s3.setProfesion("Juez");
 		this.s3.setProcedencia("España");
 		this.s3.setDescuentos(desc3);
-		this.s3.setMuseos(null);
 
 		this.s4 = new Socios();
 		this.s4.setDni("4444");
@@ -104,8 +88,14 @@ public class DatosPrueba {
 		this.s4.setProfesion("Pintor");
 		this.s4.setProcedencia("Italia");
 		this.s4.setDescuentos(desc4);
-		this.s4.setMuseos(null);
 
+		this.s5 = new Socios();
+		this.s5.setDni("5555");
+		this.s5.setNombrecompleto("Sexto Socio");
+		this.s5.setEmail("Sexto@udc");
+		this.s5.setTipo("Turista nacional");
+		this.s5.setProfesion("Medico");
+		this.s5.setProcedencia("Alemania");
 
         this.listadoS = new ArrayList<Socios> ();
         this.listadoS.add(0,s0);
@@ -113,7 +103,7 @@ public class DatosPrueba {
 		this.listadoS.add(2,s2);
 		this.listadoS.add(3,s3);
 		this.listadoS.add(4,s4);
-
+		this.listadoS.add(5,s5);
 	}
 
 	public void crearEmpleadosSueltos() {
@@ -124,7 +114,7 @@ public class DatosPrueba {
 		this.e0.setEmail("Primerempleado@udc");
 		this.e0.setPuesto("Guia");
 		this.e0.setSueldo(1500);
-		this.e0.setExperiencia("5 años");
+		this.e0.setExperiencia("5 anhos");
 		this.e0.setMuseo(null);
 
 		this.e1 = new Empleados();
@@ -133,7 +123,7 @@ public class DatosPrueba {
 		this.e1.setEmail("Segundoempleado@udc");
 		this.e1.setPuesto("Vigilante");
 		this.e1.setSueldo(1000);
-		this.e1.setExperiencia("1 año");
+		this.e1.setExperiencia("1 anho");
 		this.e1.setMuseo(null);
 
 		this.e2 = new Empleados();
@@ -142,7 +132,7 @@ public class DatosPrueba {
 		this.e2.setEmail("Tercerempleado@gmail");
 		this.e2.setPuesto("Conserje");
 		this.e2.setSueldo(1200);
-		this.e2.setExperiencia("10 años");
+		this.e2.setExperiencia("10 anhos");
 		this.e2.setMuseo(null);
 
 		this.e3 = new Empleados();
@@ -175,55 +165,20 @@ public class DatosPrueba {
 
 	public void crearMuseosSueltos() {
 
-/*
-		Set<Socios> i0 = new HashSet<Socios>();
-		Set<Socios> i1 = new HashSet<Socios>();
-		Set<Socios> i2 = new HashSet<Socios>();
-
-		Set<Empleados> emp0 = new HashSet<Empleados>();
-		Set<Empleados> emp1 = new HashSet<Empleados>();
-		Set<Empleados> emp2 = new HashSet<Empleados>();
-*/
-
-/*
-		i0.add(s0);
-		i0.add(s1);
-		i0.add(s2);
-		i0.add(s4);
-		i1.add(s1);
-		i1.add(s4);
-		i2.add(s0);
-		i2.add(s3);
-		i2.add(s4);
-
-		emp0.add(e0);
-		emp0.add(e3);
-		emp0.add(e4);
-		emp1.add(e1);
-		emp2.add(e2);*/
-
-
-
 		this.m0 = new Museo();
 		this.m0.setNombre("Museo Domus");
 		this.m0.setUbicacion("A Corunha");
 		this.m0.setCategoria("Ciencias");
-		this.m0.setInscritos(null);
-		this.m0.setEmpleados(null);
 
 		this.m1 = new Museo();
 		this.m1.setNombre("Museo del Greco");
 		this.m1.setUbicacion("Toledo");
 		this.m1.setCategoria("Casa-Museo");
-		this.m1.setInscritos(null);
-		this.m1.setEmpleados(null);
 
 		this.m2 = new Museo();
 		this.m2.setNombre("Museo del Prado");
 		this.m2.setUbicacion("Madrid");
 		this.m2.setCategoria("Arte");
-		this.m2.setInscritos(null);
-		this.m2.setEmpleados(null);
 
 		this.listadoM = new ArrayList<Museo> ();
 		this.listadoM.add(0,m0);
@@ -339,13 +294,15 @@ public class DatosPrueba {
 		try {
 			em = emf.createEntityManager();
 			em.getTransaction().begin();
+
+			Iterator <Socios> itS = ((List<Socios>)em.createQuery("FROM Socios").getResultList()).iterator();
+			while (itS.hasNext()) em.remove(itS.next());
+
 			em.createQuery("DELETE FROM Socios").executeUpdate();
 			em.createQuery("DELETE FROM Empleados").executeUpdate();
-			/*em.createQuery("DELETE FROM Persona").executeUpdate();*/
 			em.createQuery("DELETE FROM Museo").executeUpdate();
+
 			em.createNativeQuery("UPDATE tabla_ids SET ultimo_valor_id=0 WHERE nombre_id='idPersona'" ).executeUpdate();
-/*			em.createNativeQuery("UPDATE tabla_ids SET ultimo_valor_id=0 WHERE nombre_id='idSocios'" ).executeUpdate();
-			em.createNativeQuery("UPDATE tabla_ids SET ultimo_valor_id=0 WHERE nombre_id='idEmpleados'" ).executeUpdate();*/
 			em.createNativeQuery("UPDATE tabla_ids SET ultimo_valor_id=0 WHERE nombre_id='idMuseo'" ).executeUpdate();
 
 			em.getTransaction().commit();
