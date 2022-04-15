@@ -85,17 +85,17 @@ public class Test3_Consultas_TT {
     	Museo listaM;
 
     	log.info("");	
-		log.info("Configurando situación de partida do test -----------------------------------------------------------------------");
+		log.info("Configurando situacion de partida del test -----------------------------------------------------------------------");
 
 		productorDatos.crearMuseosSueltos();
 		productorDatos.grabaMuseos();
 
     	log.info("");	
-		log.info("Inicio do test --------------------------------------------------------------------------------------------------");
-    	log.info("Obxectivo: Proba da consulta Usuario.recuperaTodos\n");   
+		log.info("Inicio del test --------------------------------------------------------------------------------------------------");
+    	log.info("Objetivo: Prueba de la consulta Museo.recuperaporNombre\n");
 
     	// Situación de partida:
-    	// u1, e1A, e1B desligados
+    	// museos desligado
 
 		listaM = musDao.recuperaPorNombre("Museo Domus");
 
@@ -111,7 +111,7 @@ public class Test3_Consultas_TT {
 		Socios soc0, soc6;
 
 		log.info("");
-		log.info("Configurando situación de partida do test -----------------------------------------------------------------------");
+		log.info("Configurando situacion de partida del test -----------------------------------------------------------------------");
 
 		productorDatos.crearSociosSueltos();
 		productorDatos.creaMuseoconInscritos();
@@ -120,10 +120,10 @@ public class Test3_Consultas_TT {
 
 		log.info("");
 		log.info("Inicio do test --------------------------------------------------------------------------------------------------");
-		log.info("Obxectivo: Proba da consulta Usuario.recuperaSociosSinMuseo\n");
+		log.info("Objetivo: Prueba de la consulta Museo.recuperaSociosSinMuseon");
 
-		// Situación de partida:
-		// u1, e1A, e1B desligados
+		// Situacion de partida:
+		// museos y socios desligados
 
 		listaS = musDao.recuperaSociosSinMuseo();
 		soc0= listaS.get(0);
@@ -147,7 +147,7 @@ public class Test3_Consultas_TT {
 		Empleados Empleado;
 
 		log.info("");
-		log.info("Configurando situación de partida do test -----------------------------------------------------------------------");
+		log.info("Configurando situacion de partida del test -----------------------------------------------------------------------");
 
 		productorDatos.crearEmpleadosSueltos();
 		productorDatos.crearSociosSueltos();
@@ -161,10 +161,10 @@ public class Test3_Consultas_TT {
 
 		log.info("");
 		log.info("Inicio do test --------------------------------------------------------------------------------------------------");
-		log.info("Obxectivo: Proba da consulta Usuario.recuperaTodos\n");
+		log.info("Objetivo: Prueba de la consulta Persona.recuperaPorDni\n");
 
-		// Situación de partida:
-		// u1, e1A, e1B desligados
+		// Situacion de partida:
+		// museo, socios y empleados desligados
 
 		Socio = (Socios) socDao.recuperaPorDni("3333");
 		
@@ -194,7 +194,7 @@ public class Test3_Consultas_TT {
 
 
 		log.info("");
-		log.info("Configurando situación de partida do test -----------------------------------------------------------------------");
+		log.info("Configurando situacion de partida del test -----------------------------------------------------------------------");
 
 		productorDatos.crearEmpleadosSueltos();
 		productorDatos.creaMuseoconEmpleados();
@@ -211,11 +211,11 @@ public class Test3_Consultas_TT {
 
 
 		log.info("");
-		log.info("Inicio do test --------------------------------------------------------------------------------------------------");
-		log.info("Obxectivo: Proba da consulta Usuario.recuperaTodos\n");
+		log.info("Inicio del test --------------------------------------------------------------------------------------------------");
+		log.info("Objetivo: Prueba de la consulta Empleado.recuperaSueldoMedi0\n");
 
-		// Situación de partida:
-		// u1, e1A, e1B desligados
+		// Situacion de partida:
+		// museos y empleados desligados
 
 		listaE = socDao.recuperaSueldoMedio();
 		Assert.assertEquals(listaE.toArray()[0],mediasalario);
@@ -228,7 +228,7 @@ public class Test3_Consultas_TT {
 		Socios soc0, soc1, soc2;
 
 		log.info("");
-		log.info("Configurando situación de partida do test -----------------------------------------------------------------------");
+		log.info("Configurando situacion de partida del test -----------------------------------------------------------------------");
 
 		productorDatos.crearSociosSueltos();
 		productorDatos.creaMuseoconInscritos();
@@ -236,11 +236,11 @@ public class Test3_Consultas_TT {
 		productorDatos.grabaSocios();
 
 		log.info("");
-		log.info("Inicio do test --------------------------------------------------------------------------------------------------");
-		log.info("Obxectivo: Proba da consulta Usuario.recuperaTodos\n");
+		log.info("Inicio del test --------------------------------------------------------------------------------------------------");
+		log.info("Objetivo: Prueba de la consulta Socios.recuperaSociosMinDosMuseos\n");
 
 		// Situación de partida:
-		// u1, e1A, e1B desligados
+		// empleado y socios desligados
 
 		listaS = socDao.recuperaSociosMinDosMuseos();
 		soc0 = listaS.get(0);
@@ -267,7 +267,7 @@ public class Test3_Consultas_TT {
 		Museo mus0, mus1;
 
 		log.info("");
-		log.info("Configurando situación de partida do test -----------------------------------------------------------------------");
+		log.info("Configurando situacion de partida del test -----------------------------------------------------------------------");
 
 		productorDatos.crearSociosSueltos();
 		productorDatos.creaMuseoconInscritos();
@@ -275,11 +275,11 @@ public class Test3_Consultas_TT {
 		productorDatos.grabaSocios();
 
 		log.info("");
-		log.info("Inicio do test --------------------------------------------------------------------------------------------------");
-		log.info("Obxectivo: Proba da consulta Usuario.recuperaTodos\n");
+		log.info("Inicio del test --------------------------------------------------------------------------------------------------");
+		log.info("Objetivo: Prueba da consulta Socios.recuperaMuseos\n");
 
 		// Situación de partida:
-		// u1, e1A, e1B desligados
+		// museos y socios desligados
 
 		listaM = socDao.recuperaMuseos(1L);
 

@@ -74,18 +74,18 @@ public class Test1_Socios {
     public void t1_CRUD_TestAlta() {
 
     	log.info("");	
-		log.info("Configurando situación de partida del test -----------------------------------------------------------------------");
+		log.info("Configurando situacion de partida del test -----------------------------------------------------------------------");
   
 		productoDatosPrueba.crearSociosSueltos();
     	
     	log.info("");	
 		log.info("Inicio del test --------------------------------------------------------------------------------------------------");
-    	log.info("Objetivo: Prueba de grabación en la BD del nuevo socio (sin museos asociados)\n");
+    	log.info("Objetivo: Prueba de grabacion en la BD del nuevo socio (sin museos asociados)\n");
     	
-    	// Situación de partida:
+    	// Situacion de partida:
     	// s0 transitorio
 
-
+		Assert.assertNull(productoDatosPrueba.s2.getId());
 		socDao.alta(productoDatosPrueba.s2);
     	Assert.assertNotNull(productoDatosPrueba.s2.getId());
     }
@@ -96,19 +96,19 @@ public class Test1_Socios {
     	Socios s;
     	
     	log.info("");	
-		log.info("Configurando situación de partida del test -----------------------------------------------------------------------");
+		log.info("Configurando situacion de partida del test -----------------------------------------------------------------------");
 
 		productoDatosPrueba.crearSociosSueltos();
     	productoDatosPrueba.grabaSocios();
     	
     	log.info("");	
 		log.info("Inicio del test --------------------------------------------------------------------------------------------------");
-    	log.info("Objetivo: Pruba de recuperación desde la BD de socio (sin museos asociado) por dni\n"   
+    	log.info("Objetivo: Prueba de recuperacion desde la BD de socio (sin museos asociado) por dni\n"   
     			+ "\t\t\t\t Casos contemplados:\n"
-    			+ "\t\t\t\t a) Recuperación por dni existente\n"
+    			+ "\t\t\t\t a) Recuperacion por dni existente\n"
     			+ "\t\t\t\t b) Recuperacion por dni inexistente\n");
 
-    	// Situación de partida:
+    	// Situacion de partida:
     	// s0 desligado    	
 
     	log.info("Probando recuperacion por dni EXISTENTE --------------------------------------------------");
@@ -123,14 +123,13 @@ public class Test1_Socios {
     	
     	s = (Socios) socDao.recuperaPorDni("DniInvalido");
     	Assert.assertNull (s);
-
     } 	
 
     @Test 
     public void t3_CRUD_TestElimina() {
     	
     	log.info("");	
-		log.info("Configurando situación de partida del test -----------------------------------------------------------------------");
+		log.info("Configurando situacion de partida del test -----------------------------------------------------------------------");
 
 		productoDatosPrueba.crearSociosSueltos();
     	productoDatosPrueba.grabaSocios();
@@ -138,9 +137,9 @@ public class Test1_Socios {
     	
     	log.info("");	
 		log.info("Inicio del test --------------------------------------------------------------------------------------------------");
-    	log.info("Objetivo: Prueba de eliminación de la BD de socio sin museos asociados\n");   
+    	log.info("Objetivo: Prueba de eliminacion de la BD de socio sin museos asociados\n");   
  
-    	// Situación de partida:
+    	// Situacion de partida:
     	// s0 desligado  
 
     	Assert.assertNotNull(socDao.recuperaPorDni(productoDatosPrueba.s0.getDni()));
@@ -155,16 +154,16 @@ public class Test1_Socios {
     	String nuevoNombre;
     	
     	log.info("");	
-		log.info("Configurando situación de partida del test -----------------------------------------------------------------------");
+		log.info("Configurando situacion de partida del test -----------------------------------------------------------------------");
 
 		productoDatosPrueba.crearSociosSueltos();
     	productoDatosPrueba.grabaSocios();
 
     	log.info("");	
 		log.info("Inicio del test --------------------------------------------------------------------------------------------------");
-    	log.info("Objetivo: Prueba de modificación de la información básica de un socio sin museos\n");
+    	log.info("Objetivo: Prueba de modificacion de la informacion basica de un socio sin museos\n");
 
-    	// Situación de partida:
+    	// Situacion de partida:
     	// s0 desligado  
 
 		nuevoNombre = new String ("Nombre nuevo");
@@ -187,22 +186,22 @@ public class Test1_Socios {
     	Boolean excepcion;
     	
     	log.info("");	
-		log.info("Configurando situación de partida del test -----------------------------------------------------------------------");
+		log.info("Configurando situacion de partida del test -----------------------------------------------------------------------");
 
 		productoDatosPrueba.crearSociosSueltos();
     	socDao.alta(productoDatosPrueba.s0);
     	
     	log.info("");	
 		log.info("Inicio del test --------------------------------------------------------------------------------------------------");
-    	log.info("Objetivo: Prueba de violación de restricións not null y unique\n"   
+    	log.info("Objetivo: Prueba de violacion de restricions not null y unique\n"   
     			+ "\t\t\t\t Casos contemplados:\n"
-    			+ "\t\t\t\t a) Grabación de socio con dni duplicado\n"
-    			+ "\t\t\t\t b) Grabación de socio con dni nulo\n");
+    			+ "\t\t\t\t a) Grabacion de socio con dni duplicado\n"
+    			+ "\t\t\t\t b) Grabacion de socio con dni nulo\n");
 
-    	// Situación de partida:
+    	// Situacion de partida:
     	// s0 desligado, s1 transitorio
     	
-		log.info("Probando grabación de socio con Nif duplicado -----------------------------------------------");
+		log.info("Probando grabacion de socio con Nif duplicado -----------------------------------------------");
     	productoDatosPrueba.s1.setDni(productoDatosPrueba.s0.getDni());
     	try {
         	socDao.alta(productoDatosPrueba.s1);
@@ -215,7 +214,7 @@ public class Test1_Socios {
     	
     	// Nif nulo
     	log.info("");	
-		log.info("Probando grabación de socio con Nif nulo ----------------------------------------------------");
+		log.info("Probando grabacion de socio con Nif nulo ----------------------------------------------------");
     	productoDatosPrueba.s1.setDni(null);
     	try {
         	socDao.alta(productoDatosPrueba.s1);

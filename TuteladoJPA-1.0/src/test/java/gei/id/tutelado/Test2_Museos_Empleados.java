@@ -82,27 +82,27 @@ public class Test2_Museos_Empleados {
 	}	
 
 
-    @Test //alta de un empleado
+    @Test
     public void t1_CRUD_Testalta() {
 
 
     	log.info("");	
-		log.info("Configurando situación de partida do test -----------------------------------------------------------------------");
+		log.info("Configurando situacion de partida do test -----------------------------------------------------------------------");
 
 		produtorDatos.crearEmpleadosSueltos();
 		produtorDatos.crearMuseosSueltos();
 		produtorDatos.grabaMuseos();
 
 		log.info("");
-		log.info("Inicio do test --------------------------------------------------------------------------------------------------");
-    	log.info("Obxectivo: Proba da gravación de entradas de log soltas\n"   
+		log.info("Inicio del test --------------------------------------------------------------------------------------------------");
+    	log.info("Objetivo: Prueba da grabacion de empleados sueltos\n"   
     			+ "\t\t\t\t Casos contemplados:\n"
-    			+ "\t\t\t\t a) Primeira entrada de log vinculada a un usuario\n"
-    			+ "\t\t\t\t b) Nova entrada de log para un usuario con entradas previas\n");     	
+    			+ "\t\t\t\t a) Primer empleado vinculado a un museo\n"
+    			+ "\t\t\t\t b) Nuevo museo para un museo con empleados previos\n");     	
 
-    	// Situación de partida:
+    	// Situacion de partida:
     	// m1 desligado    	
-    	// s0, s1 transitorios
+    	// e0, e1 transitorios
 
     	produtorDatos.m1.agregarEmpleado(produtorDatos.e0);
 		
@@ -129,7 +129,7 @@ public class Test2_Museos_Empleados {
     	Empleados e;
     	
     	log.info("");	
-		log.info("Configurando situación de partida do test -----------------------------------------------------------------------");
+		log.info("Configurando situacion de partida do test -----------------------------------------------------------------------");
 
 		produtorDatos.creaMuseoconEmpleados();
 		produtorDatos.grabaMuseos();
@@ -137,15 +137,15 @@ public class Test2_Museos_Empleados {
 
 
 		log.info("Inicio do test --------------------------------------------------------------------------------------------------");
-    	log.info("Obxectivo: Proba da recuperación (por codigo) de entradas de log soltas\n"   
+    	log.info("Objetivo: Prueba da recuperacion (por codigo) de empleados sueltos\n"
 		+ "\t\t\t\t Casos contemplados:\n"
-		+ "\t\t\t\t a) Recuperación por codigo existente\n"
-		+ "\t\t\t\t b) Recuperacion por codigo inexistente\n");     	
+		+ "\t\t\t\t a) Recuperacion por dni existente\n"
+		+ "\t\t\t\t b) Recuperacion por dni inexistente\n");
 
-    	// Situación de partida:
-    	// m1, s0, s1 desligados
+    	// Situacion de partida:
+    	// m1, e0, e1 desligados
     	
-		log.info("Probando recuperacion por codigo EXISTENTE --------------------------------------------------");
+		log.info("Probando recuperacion por dni EXISTENTE --------------------------------------------------");
 
     	e = (Empleados) empDao.recuperaPorDni(produtorDatos.e0.getDni());
 
@@ -154,14 +154,14 @@ public class Test2_Museos_Empleados {
     	Assert.assertEquals (produtorDatos.e0.getNombrecompleto(),   e.getNombrecompleto());
 
     	log.info("");	
-		log.info("Probando recuperacion por codigo INEXISTENTE --------------------------------------------------");
+		log.info("Probando recuperacion por dni INEXISTENTE --------------------------------------------------");
     	
     	e = (Empleados) empDao.recuperaPorDni("iwbvyhuebvuwebvi");
     	Assert.assertNull (e);
 
     } 	
 
-    @Test //LAZY EAGER REVISAR
+    @Test
     public void t2b_CRUD_TestRecupera() {
     	
     	Museo m;
@@ -169,21 +169,21 @@ public class Test2_Museos_Empleados {
     	Boolean excepcion;
     	
     	log.info("");	
-		log.info("Configurando situación de partida do test -----------------------------------------------------------------------");
+		log.info("Configurando situacion de partida do test -----------------------------------------------------------------------");
 
 		produtorDatos.creaMuseoconEmpleados();
     	produtorDatos.grabaMuseos();
 		produtorDatos.grabaEmpleados();
 
 		log.info("Inicio do test --------------------------------------------------------------------------------------------------");
-    	log.info("Obxectivo: Proba da recuperación de propiedades LAZY\n"   
+    	log.info("Objetivo: Prueba da recuperacion de propiedades LAZY\n"
 		+ "\t\t\t\t Casos contemplados:\n"
-		+ "\t\t\t\t a) Recuperación de usuario con colección (LAZY) de entradas de log \n"
-		+ "\t\t\t\t b) Carga forzada de colección LAZY da dita coleccion\n"     	
-		+ "\t\t\t\t c) Recuperacion de entrada de log solta con referencia (EAGER) a usuario\n");     	
+		+ "\t\t\t\t a) Recuperacion de museo con coleccion (LAZY) de empleados \n"
+		+ "\t\t\t\t b) Carga forzada de coleccion LAZY da dicha coleccion\n"
+		+ "\t\t\t\t c) Carga forzada de coleccion LAZY de museo \n");
 
-    	// Situación de partida:
-    	// m1, s0, s1 desligados
+    	// Situacion de partida:
+    	// m1, e0, e1 desligados
     	
 		log.info("Probando (excepcion tras) recuperacion LAZY ---------------------------------------------------------------------");
     	
@@ -205,7 +205,7 @@ public class Test2_Museos_Empleados {
     	log.info("Probando carga forzada de coleccion LAZY ------------------------------------------------------------------------");
     	
     	m = musDao.recuperaPorNombre((produtorDatos.m1.getNombre()));
-    	m = musDao.restauraEmpleados(m);						// Usuario u con proxy xa inicializado
+    	m = musDao.restauraEmpleados(m);						// Museo m con proxy ya inicializado
     	
     	Assert.assertEquals(1, m.getEmpleados().size());
 		Assert.assertTrue(m.getEmpleados().contains(produtorDatos.e1));
@@ -214,7 +214,7 @@ public class Test2_Museos_Empleados {
 		log.info("Probando carga forzada de coleccion LAZY ------------------------------------------------------------------------");
 
 		e1 = (Empleados) empDao.recuperaPorDni((produtorDatos.e0.getDni()));
-		e1 = empDao.recuperaMuseo(e1);						// Usuario u con proxy xa inicializado
+		e1 = empDao.recuperaMuseo(e1);						// Empleado e con proxy ya inicializado
 
 		System.out.println(e1.getMuseo().getNombre());
 		Assert.assertTrue(m.getEmpleados().contains(produtorDatos.e1));
@@ -224,7 +224,7 @@ public class Test2_Museos_Empleados {
     public void t3a_CRUD_TestElimina() {
     	
     	log.info("");	
-		log.info("Configurando situación de partida do test -----------------------------------------------------------------------");
+		log.info("Configurando situacion de partida del test -----------------------------------------------------------------------");
 
     	produtorDatos.creaMuseoconEmpleados();
     	produtorDatos.grabaMuseos();
@@ -234,22 +234,21 @@ public class Test2_Museos_Empleados {
 
 		log.info("");
 		log.info("Inicio do test --------------------------------------------------------------------------------------------------");
-    	log.info("Obxectivo: Proba de eliminación de entrada de log solta (asignada a usuario)\n");
+    	log.info("Objetivo: Prueba de eliminacion de empleados sueltos (asignados a museo)\n");
     	
-    	// Situación de partida:
-    	// s0 desligado
+    	// Situacion de partida:
+    	// e0 desligado
 
 		Assert.assertNotNull(empDao.recuperaPorDni(produtorDatos.e0.getDni()));
     	empDao.elimina(produtorDatos.e0);
 		Assert.assertNull(empDao.recuperaPorDni(produtorDatos.e0.getDni()));
-
     } 	
 
     @Test
     public void t3b_CRUD_TestElimina() {
 
     	log.info("");
-		log.info("Configurando situación de partida do test -----------------------------------------------------------------------");
+		log.info("Configurando situacion de partida del test -----------------------------------------------------------------------");
 
     	produtorDatos.creaMuseoconEmpleados();
     	produtorDatos.grabaMuseos();
@@ -257,15 +256,15 @@ public class Test2_Museos_Empleados {
 
     	log.info("");
 		log.info("Inicio do test --------------------------------------------------------------------------------------------------");
-    	log.info("Obxectivo: Proba de eliminación de de usuario con entradas de log asociadas\n");
+    	log.info("Objetivo: Prueba de eliminacion de museo con empleados asociados\n");
 
-    	// Situación de partida:
-    	// m1, s0, s1 desligados
+    	// Situacion de partida:
+    	// m1, e0, e1 desligados
 
     	Assert.assertNotNull(musDao.recuperaPorNombre(produtorDatos.m1.getNombre()));
 		Assert.assertNotNull(empDao.recuperaPorDni(produtorDatos.e1.getDni()));
 
-		// Aqui o remove sobre m1 debe propagarse a s0 e s1 Aqui es como nuestro caso
+		// Aqui el remove sobre m1 debe propagarse a e0 y e1
 		musDao.elimina(produtorDatos.m1);
 
 		Assert.assertNull(musDao.recuperaPorNombre(produtorDatos.m1.getNombre()));
@@ -284,7 +283,7 @@ public class Test2_Museos_Empleados {
 		Set<Empleados> listaEmpleados = new HashSet<Empleados>();
     	
     	log.info("");	
-		log.info("Configurando situación de partida do test -----------------------------------------------------------------------");
+		log.info("Configurando situacion de partida do test -----------------------------------------------------------------------");
   
 		produtorDatos.creaMuseoconEmpleados();
     	produtorDatos.grabaMuseos();
@@ -292,11 +291,11 @@ public class Test2_Museos_Empleados {
 
     	log.info("");	
 		log.info("Inicio do test --------------------------------------------------------------------------------------------------");
-    	log.info("Obxectivo: Proba de modificación da información dunha entrada de log solta\n");
+    	log.info("Objetivo: Proba de modificacion da informacion dunha entrada de log solta\n");
  
     	
-    	// Situación de partida:
-    	// s0 desligado
+    	// Situacion de partida:
+    	// e0 desligado
     	
 		nuevoSueldo = 1200;
 
@@ -309,8 +308,6 @@ public class Test2_Museos_Empleados {
     	
 		e1b = (Empleados) empDao.recuperaPorDni(produtorDatos.e1.getDni());
 		Assert.assertEquals (nuevoSueldo, e1b.getSueldo());
-
-    	// NOTA: Non probamos modificación de usuario da entrada porque non ten sentido no dominio considerado
 
 		nuevoEmpleado = produtorDatos.e2;
 		listaEmpleados.add(nuevoEmpleado);
@@ -334,7 +331,7 @@ public class Test2_Museos_Empleados {
     	Boolean excepcion;
     	
     	log.info("");	
-		log.info("Configurando situación de partida do test -----------------------------------------------------------------------");
+		log.info("Configurando situacion de partida del test -----------------------------------------------------------------------");
 
 		produtorDatos.crearMuseosSueltos();
 		produtorDatos.grabaMuseos();
@@ -344,15 +341,15 @@ public class Test2_Museos_Empleados {
 		empDao.alta(produtorDatos.e0);
 		
     	log.info("");	
-		log.info("Inicio do test --------------------------------------------------------------------------------------------------");
-    	log.info("Obxectivo: Proba de violacion de restricions not null e unique\n"   
+		log.info("Inicio del test --------------------------------------------------------------------------------------------------");
+    	log.info("Objetivo: Prueba de violacion de restricciones not null y unique\n"
     			+ "\t\t\t\t Casos contemplados:\n"
-    			+ "\t\t\t\t a) Gravación de entrada con usuario nulo\n"
-    			+ "\t\t\t\t b) Gravación de entrada con codigo nulo\n"
-    			+ "\t\t\t\t c) Gravación de entrada con codigo duplicado\n");
+    			+ "\t\t\t\t a) Gravacion de empleado con museo nulo\n"
+    			+ "\t\t\t\t b) Gravacion de empleado con dni nulo\n"
+    			+ "\t\t\t\t c) Gravacion de empleado con dni duplicado\n");
 
     	
-		log.info("Probando gravacion de entrada con usuario nulo ------------------------------------------------------------------");
+		log.info("Probando gravacion de entrada con museo nulo ------------------------------------------------------------------");
     	try {
     		empDao.alta(produtorDatos.e1);
         	excepcion=false;
@@ -362,11 +359,11 @@ public class Test2_Museos_Empleados {
     	}
     	Assert.assertTrue(excepcion);
 
-    	// Ligar entrada a usuario para poder probar outros erros
+    	// Ligar empleado a museo para poder probar otros errores
 		produtorDatos.m1.agregarEmpleado(produtorDatos.e1);
     	    	
     	log.info("");	
-		log.info("Probando gravacion de entrada con codigo nulo -------------------------------------------------------------------");
+		log.info("Probando gravacion de empleado con dni nulo -------------------------------------------------------------------");
 		produtorDatos.e1.setDni(null);
     	try {
         	empDao.alta(produtorDatos.e1);
@@ -378,7 +375,7 @@ public class Test2_Museos_Empleados {
     	Assert.assertTrue(excepcion);
 
     	log.info("");	
-		log.info("Probando gravacion de entrada con codigo duplicado --------------------------------------------------------------");
+		log.info("Probando gravacion de empleado con dni duplicado --------------------------------------------------------------");
 		produtorDatos.e1.setDni(produtorDatos.e0.getDni());
     	try {
         	empDao.alta(produtorDatos.e1);
@@ -388,7 +385,6 @@ public class Test2_Museos_Empleados {
     		log.info(ex.getClass().getName());
     	}
     	Assert.assertTrue(excepcion);
-
     } 	
 
 }

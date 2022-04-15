@@ -75,13 +75,16 @@ public class Test1_Museo {
 	public void t1_CRUD_TestAlta() {
 
 		log.info("");
-		log.info("Configurando situación de partida del test -----------------------------------------------------------------------");
+		log.info("Configurando situacion de partida del test -----------------------------------------------------------------------");
 
 		productorDatos.crearMuseosSueltos();
 
 		log.info("");
 		log.info("Inicio del test --------------------------------------------------------------------------------------------------");
-		log.info("Objetivo: Prueba de grabación en la BD del nuevo museo (sin empleados ni socios)\n");
+		log.info("Objetivo: Prueba de grabacion en la BD del nuevo museo (sin empleados ni socios)\n");
+
+		// Situación de partida:
+		// m0 transitorio
 
 		Assert.assertNull(productorDatos.m0.getIdmuseo());
 		musDao.alta(productorDatos.m0);
@@ -94,16 +97,16 @@ public class Test1_Museo {
 		Museo m;
 
 		log.info("");
-		log.info("Configurando situación de partida del test -----------------------------------------------------------------------");
+		log.info("Configurando situacion de partida del test -----------------------------------------------------------------------");
 
 		productorDatos.crearMuseosSueltos();
 		productorDatos.grabaMuseos();
 
 		log.info("");
 		log.info("Inicio del test --------------------------------------------------------------------------------------------------");
-		log.info("Objetivo: Prueba de recuperación desde la BD de museo (sin socios ni empleados) por nombre\n"
+		log.info("Objetivo: Prueba de recuperacion desde la BD de museo (sin socios ni empleados) por nombre\n"
 				+ "\t\t\t\t Casos contemplados:\n"
-				+ "\t\t\t\t a) Recuperación por nombre existente\n"
+				+ "\t\t\t\t a) Recuperacion por nombre existente\n"
 				+ "\t\t\t\t b) Recuperacion por nombre inexistente\n");
 
 
@@ -125,11 +128,10 @@ public class Test1_Museo {
 	public void t3_CRUD_TestElimina() {
 
 		log.info("");
-		log.info("Configurando situación de partida do test -----------------------------------------------------------------------");
+		log.info("Configurando situacion de partida del test -----------------------------------------------------------------------");
 
 		productorDatos.crearMuseosSueltos();
 		productorDatos.grabaMuseos();
-
 
 		log.info("");
 		log.info("Inicio do test --------------------------------------------------------------------------------------------------");
@@ -170,7 +172,6 @@ public class Test1_Museo {
 
 		m2 = musDao.recuperaPorNombre(productorDatos.m0.getNombre());
 		Assert.assertEquals (nuevaCategoria, m2.getCategoria());
-
 	}
 
 	@Test
@@ -179,20 +180,21 @@ public class Test1_Museo {
 		Boolean excepcion;
 
 		log.info("");
-		log.info("Configurando situación de partida del test -----------------------------------------------------------------------");
+		log.info("Configurando situacion de partida del test -----------------------------------------------------------------------");
 
 		productorDatos.crearMuseosSueltos();
 		musDao.alta(productorDatos.m0);
 
 		log.info("");
 		log.info("Inicio del test --------------------------------------------------------------------------------------------------");
-		log.info("Objetivo: Prueba de violación de restriciones not null y unique\n"
+		log.info("Objetivo: Prueba de violacion de restriciones not null y unique\n"
 				+ "\t\t\t\t Casos contemplados:\n"
 				+ "\t\t\t\t a) Grabación de museo con nombre duplicado\n"
 				+ "\t\t\t\t b) Grabación de museo con nombre nulo\n");
 
 
-		log.info("Probando grabacion de museo con Nombre duplicado -----------------------------------------------");
+		log.info("Probando grabacion de museo con nombre duplicado -----------------------------------------------");
+
 		productorDatos.m1.setNombre(productorDatos.m0.getNombre());
 		try {
 			musDao.alta(productorDatos.m1);
