@@ -70,7 +70,7 @@ public class Test2_Museos_Inscritos {
 	@Before
 	public void setUp() throws Exception {		
 		log.info("");	
-		log.info("Limpando BD -----------------------------------------------------------------------------------------------------");
+		log.info("Limpiando BD -----------------------------------------------------------------------------------------------------");
 		produtorDatos.limpaBD();
 	}
 
@@ -84,7 +84,7 @@ public class Test2_Museos_Inscritos {
 
 
     	log.info("");	
-		log.info("Configurando situación de partida do test -----------------------------------------------------------------------");
+		log.info("Configurando situacion de partida del test -----------------------------------------------------------------------");
 
 		produtorDatos.crearSociosSueltos();
 		produtorDatos.crearMuseosSueltos();
@@ -92,19 +92,14 @@ public class Test2_Museos_Inscritos {
 
 
     	log.info("");	
-		log.info("Inicio do test --------------------------------------------------------------------------------------------------");
-    	log.info("Obxectivo: Proba da gravación de entradas de log soltas\n"   
+		log.info("Inicio del test --------------------------------------------------------------------------------------------------");
+    	log.info("Objetivo: Prueba da grabacion de socio sueltos\n"
     			+ "\t\t\t\t Casos contemplados:\n"
-    			+ "\t\t\t\t a) Primeira entrada de log vinculada a un usuario\n"
-    			+ "\t\t\t\t b) Nova entrada de log para un usuario con entradas previas\n");     	
-
-    	// Situación de partida:
-    	// m1 desligado    	
-    	// s0, s1 transitorios
-
+    			+ "\t\t\t\t a) Primer socio inscrito a un museo\n"
+    			+ "\t\t\t\t b) Nuevo socio para un museo con inscritos\n");
 
     	log.info("");	
-		log.info("Gravando primeira entrada de log dun usuario --------------------------------------------------------------------");
+		log.info("Grabando socio de un museo --------------------------------------------------------------------");
     	Assert.assertNull(produtorDatos.s0.getId());
     	socDao.alta(produtorDatos.s0);
     	Assert.assertNotNull(produtorDatos.s0.getId());
@@ -115,34 +110,31 @@ public class Test2_Museos_Inscritos {
 
 
     	log.info("");	
-		log.info("Gravando segunda entrada de log dun usuario ---------------------------------------------------------------------");
+		log.info("Grabando segundo socio de un museo ---------------------------------------------------------------------");
     	socDao.alta(produtorDatos.s1);
 		produtorDatos.m1.agregarSocios(produtorDatos.s1);
     	Assert.assertEquals(produtorDatos.m1.getInscritos().size(),2);
 		Assert.assertTrue(produtorDatos.m1.getInscritos().contains(produtorDatos.s1));
     }
 
-    @Test //Test recupera por dni sin lazy ni eager
+    @Test
     public void t2a_CRUD_TestRecupera() {
    	
     	Socios s;
     	
     	log.info("");	
-		log.info("Configurando situación de partida do test -----------------------------------------------------------------------");
+		log.info("Configurando situacion de partida del test -----------------------------------------------------------------------");
 
 		produtorDatos.creaMuseoconInscritos();
 		produtorDatos.grabaMuseos();
     	produtorDatos.grabaSocios();
 
 
-		log.info("Inicio do test --------------------------------------------------------------------------------------------------");
-    	log.info("Obxectivo: Proba da recuperación (por codigo) de entradas de log soltas\n"   
+		log.info("Inicio del test --------------------------------------------------------------------------------------------------");
+    	log.info("Objetivo: Prueba de la recuperacion (por dni) de socio inscrito a museo\n"
 		+ "\t\t\t\t Casos contemplados:\n"
-		+ "\t\t\t\t a) Recuperación por codigo existente\n"
-		+ "\t\t\t\t b) Recuperacion por codigo inexistente\n");     	
-
-    	// Situación de partida:
-    	// m1, s0, s1 desligados
+		+ "\t\t\t\t a) Recuperacion por dni existente\n"
+		+ "\t\t\t\t b) Recuperacion por dni inexistente\n");
     	
 		log.info("Probando recuperacion por dni EXISTENTE --------------------------------------------------");
 
@@ -153,13 +145,13 @@ public class Test2_Museos_Inscritos {
     	Assert.assertEquals (produtorDatos.s0.getNombrecompleto(),   s.getNombrecompleto());
 
     	log.info("");	
-		log.info("Probando recuperacion por codigo INEXISTENTE --------------------------------------------------");
+		log.info("Probando recuperacion por dni INEXISTENTE --------------------------------------------------");
     	
     	s = (Socios) socDao.recuperaPorDni("iwbvyhuebvuwebvi");
     	Assert.assertNull (s);
     } 	
 
-    @Test //test Lazy por parte Museo e EAGER por parte Socio REVISAR//////////////////////////////////////////
+    @Test
     public void t2b_CRUD_TestRecupera() {
     	
     	Museo m;
@@ -167,28 +159,24 @@ public class Test2_Museos_Inscritos {
     	Boolean excepcion;
     	
     	log.info("");	
-		log.info("Configurando situación de partida do test -----------------------------------------------------------------------");
+		log.info("Configurando situacion de partida del test -----------------------------------------------------------------------");
 
 		produtorDatos.creaMuseoconInscritos();
     	produtorDatos.grabaMuseos();
 		produtorDatos.grabaSocios();
 
-		log.info("Inicio do test --------------------------------------------------------------------------------------------------");
-    	log.info("Obxectivo: Proba da recuperación de propiedades LAZY\n"   
+		log.info("Inicio del test --------------------------------------------------------------------------------------------------");
+    	log.info("Objetivo: Prueba de la recuperacin de propiedades LAZY\n"   
 		+ "\t\t\t\t Casos contemplados:\n"
-		+ "\t\t\t\t a) Recuperación de museo con colección (LAZY) de entradas de log \n"
-		+ "\t\t\t\t b) Carga forzada de colección LAZY da dita coleccion\n"     	
-		+ "\t\t\t\t c) Recuperacion de entrada de log solta con referencia (EAGER) a usuario\n");     	
-
-    	// Situación de partida:
-    	// m1, s0, s1 desligados
+		+ "\t\t\t\t a) Recuperacion de museo con coleccion (LAZY) de socios \n"
+		+ "\t\t\t\t b) Carga forzada de coleccion LAZY de dicha coleccion de socios\n"
+		+ "\t\t\t\t c) Recuperacion de entrada de socios suelta con referencia (EAGER) a museo\n");
     	
 		log.info("Probando (excepcion tras) recuperacion LAZY ---------------------------------------------------------------------");
     	
     	m = musDao.recuperaPorNombre(produtorDatos.m1.getNombre());
-		Socios lastElement= new Socios();
 
-		log.info("Acceso a entradas de log de usuario");
+		log.info("Acceso a los socios de un museo");
     	try	{
 			Assert.assertEquals(2, m.getInscritos().size());
 			Assert.assertTrue( m.getInscritos().contains(produtorDatos.s4));
@@ -219,22 +207,19 @@ public class Test2_Museos_Inscritos {
     	Assert.assertTrue(s.getMuseos().contains(produtorDatos.m1));
     } 	
 
-    @Test //eliminar usuario
+    @Test //eliminar museo
     public void t3a_CRUD_TestElimina() {
     	
     	log.info("");	
-		log.info("Configurando situación de partida do test -----------------------------------------------------------------------");
+		log.info("Configurando situacion de partida del test -----------------------------------------------------------------------");
 
     	produtorDatos.creaMuseoconInscritos();
     	produtorDatos.grabaMuseos();
 		produtorDatos.grabaSocios();
 
     	log.info("");	
-		log.info("Inicio do test --------------------------------------------------------------------------------------------------");
-    	log.info("Obxectivo: Proba de eliminación de entrada de log solta (asignada a usuario)\n");
-    	
-    	// Situación de partida:
-    	// s0 desligado
+		log.info("Inicio del test --------------------------------------------------------------------------------------------------");
+    	log.info("Objetivo: Prueba de eliminacion de entrada de socio inscrito a un museo\n");
 
 		Assert.assertNotNull(socDao.recuperaPorDni(produtorDatos.s0.getDni()));
     	socDao.elimina(produtorDatos.s0);    	
@@ -242,7 +227,7 @@ public class Test2_Museos_Inscritos {
 
     } 	
 
-    @Test //Cambio profesión socios y cambio nombre museo asociados a ellos
+    @Test
     public void t4_CRUD_TestModifica() {
 
     	Socios s1, s1b, s2,s2b;
@@ -251,20 +236,17 @@ public class Test2_Museos_Inscritos {
 		Set<Museo> listaMuseos= new HashSet<Museo>();
     	
     	log.info("");	
-		log.info("Configurando situación de partida do test -----------------------------------------------------------------------");
+		log.info("Configurando situacion de partida del test -----------------------------------------------------------------------");
   
 		produtorDatos.creaMuseoconInscritos();
     	produtorDatos.grabaMuseos();
 		produtorDatos.grabaSocios();
 
     	log.info("");	
-		log.info("Inicio do test --------------------------------------------------------------------------------------------------");
-    	log.info("Obxectivo: Proba de modificación da información dunha entrada de log solta\n");
- 
-    	
-    	// Situación de partida:
-    	// s0 desligado
-    	
+		log.info("Inicio del test --------------------------------------------------------------------------------------------------");
+    	log.info("Objetivo: Prueba de modificacion de la informacion de socio inscrito a un museo\n");
+
+		log.info("Modifica profesion\n");
 		nuevaProfesion = new String ("Arquitecto");
 
 		s1 = (Socios) socDao.recuperaPorDni(produtorDatos.s1.getDni());
@@ -277,8 +259,7 @@ public class Test2_Museos_Inscritos {
 		s1b = (Socios) socDao.recuperaPorDni(produtorDatos.s1.getDni());
 		Assert.assertEquals (nuevaProfesion, s1b.getProfesion());
 
-    	// NOTA: Non probamos modificación de usuario da entrada porque non ten sentido no dominio considerado
-
+		log.info("Modifica lista de museos del socio inscrito\n");
 		nuevoMuseo = produtorDatos.m1;
 		listaMuseos.add(nuevoMuseo);
 
@@ -295,13 +276,13 @@ public class Test2_Museos_Inscritos {
 
     } 	
 
-    @Test //Códigos nulos o duplicados
+    @Test //Codigos nulos o duplicados
     public void t5_CRUD_TestExcepcions() {
     	
     	Boolean excepcion;
     	
     	log.info("");	
-		log.info("Configurando situación de partida do test -----------------------------------------------------------------------");
+		log.info("Configurando situacion de partida del test -----------------------------------------------------------------------");
 
 		produtorDatos.crearMuseosSueltos();
 		produtorDatos.crearSociosSueltos();
@@ -311,18 +292,18 @@ public class Test2_Museos_Inscritos {
 		produtorDatos.m1.agregarSocios(produtorDatos.s0);		
 
     	log.info("");	
-		log.info("Inicio do test --------------------------------------------------------------------------------------------------");
-    	log.info("Obxectivo: Proba de violacion de restricions not null e unique\n"   
+		log.info("Inicio del test --------------------------------------------------------------------------------------------------");
+    	log.info("Objectivo: Prueba de violacion de restricciones not null y unique\n"   
     			+ "\t\t\t\t Casos contemplados:\n"
-    			+ "\t\t\t\t a) Gravación de entrada con usuario nulo\n"
-    			+ "\t\t\t\t b) Gravación de entrada con codigo nulo\n"
-    			+ "\t\t\t\t c) Gravación de entrada con codigo duplicado\n");
+    			+ "\t\t\t\t a) Grabacion de entrada con museo nulo\n"
+    			+ "\t\t\t\t b) Grabacion de entrada con dni nulo\n"
+    			+ "\t\t\t\t c) Grabacion de entrada con dni duplicado\n");
 
-    	// Ligar entrada a usuario para poder probar outros erros
+    	// Ligar entrada a museo para poder probar outros erros
 		produtorDatos.m1.agregarSocios(produtorDatos.s1);
     	    	
     	log.info("");	
-		log.info("Probando gravacion de entrada con codigo nulo -------------------------------------------------------------------");
+		log.info("Probando grabacion con dni nulo -------------------------------------------------------------------");
 		produtorDatos.s1.setDni(null);
     	try {
         	socDao.alta(produtorDatos.s1);
@@ -334,7 +315,7 @@ public class Test2_Museos_Inscritos {
     	Assert.assertTrue(excepcion);
 
     	log.info("");	
-		log.info("Probando gravacion de entrada con codigo duplicado --------------------------------------------------------------");
+		log.info("Probando grabacion de entrada con dni duplicado --------------------------------------------------------------");
 		produtorDatos.s1.setDni(produtorDatos.s0.getDni());
     	try {
         	socDao.alta(produtorDatos.s1);
