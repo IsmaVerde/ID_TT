@@ -12,8 +12,10 @@ import java.util.Set;
         initialValue=0, allocationSize=1)
 
 @NamedQueries({
+        //Metodo que utiliza un outer join
         @NamedQuery(name="Museo.recuperaSociosSinMuseo",
                 query="SELECT s FROM Museo m RIGHT OUTER JOIN m.inscritos s"),
+        //Recuperacion por clave natural
         @NamedQuery (name="Museo.recuperaPorNombre",
                 query="SELECT m FROM Museo m where m.nombre=:nombre")
 })

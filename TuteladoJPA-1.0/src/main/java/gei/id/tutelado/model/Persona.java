@@ -9,6 +9,7 @@ import javax.persistence.*;
         initialValue=0, allocationSize=1)
 
 @NamedQueries({
+        //Recuperacion por clave natural
         @NamedQuery (name="Persona.recuperaPorDni",
                 query="SELECT p FROM Persona p where p.dni=:dni")
 })

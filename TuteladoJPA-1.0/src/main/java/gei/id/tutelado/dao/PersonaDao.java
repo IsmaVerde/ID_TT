@@ -19,13 +19,8 @@ public interface PersonaDao {
     Persona recuperaPorDni (String dni);
 
     List<Museo> recuperaMuseos(Long socio);
-
-
     List<Socios> recuperaSociosMinDosMuseos();
-
     Empleados recuperaMuseo (Empleados empleado);
-
-
     List<Double> recuperaSueldoMedio();
 
 }

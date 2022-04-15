@@ -4,8 +4,10 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @NamedQueries({
+        //Metodo que utiliza una funcion de agregacion
         @NamedQuery(name="Empleados.recuperaSueldoMedio",
                 query="SELECT avg(sueldo) FROM Empleados e"),
+        //Recuperacion por clave natural
         @NamedQuery (name="Empleados.recuperaPorDni",
                 query="SELECT e FROM Empleados e where e.dni=:dni")
 })

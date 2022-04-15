@@ -15,6 +15,8 @@ public interface MuseoDao {
     Museo modifica (Museo museo);
     void elimina (Museo museo);
     Museo recuperaPorNombre (String nombre);
+
+
     Museo restauraEmpleados (Museo museo);
     Museo restauraSocios (Museo museo);
     List<Socios> recuperaSociosSinMuseo();
