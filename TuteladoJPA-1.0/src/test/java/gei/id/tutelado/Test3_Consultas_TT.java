@@ -185,7 +185,7 @@ public class Test3_Consultas_TT {
 	}
 
 	@Test
-	public void t1_CRUD_TestQuery_Museo_recuperaSueldoMedio(){
+	public void t1_CRUD_TestQuery_Empleado_recuperaSueldoMedio(){
 
 		List<Double> listaE;
 		double mediasalario =0;
@@ -222,7 +222,7 @@ public class Test3_Consultas_TT {
 	}
 
 	@Test
-	public void t1_CRUD_TestQuery_Museo_recuperaSociosMinDosMuseos(){
+	public void t1_CRUD_TestQuery_Socios_recuperaSociosMinDosMuseos(){
 
 		List<Socios> listaS;
 		Socios soc0, soc1, soc2;
@@ -259,4 +259,41 @@ public class Test3_Consultas_TT {
 		Assert.assertEquals("Quinto Socio",soc2.getNombrecompleto());
 		Assert.assertEquals("Italia",soc2.getProcedencia());
 	}
+
+	@Test
+	public void t1_CRUD_TestQuery_Socios_recuperaMuseos(){
+
+		List<Museo> listaM;
+		Museo mus0, mus1;
+
+		log.info("");
+		log.info("Configurando situación de partida do test -----------------------------------------------------------------------");
+
+		productorDatos.crearSociosSueltos();
+		productorDatos.creaMuseoconInscritos();
+		productorDatos.grabaMuseos();
+		productorDatos.grabaSocios();
+
+		log.info("");
+		log.info("Inicio do test --------------------------------------------------------------------------------------------------");
+		log.info("Obxectivo: Proba da consulta Usuario.recuperaTodos\n");
+
+		// Situación de partida:
+		// u1, e1A, e1B desligados
+
+		listaM = socDao.recuperaMuseos(1L);
+
+		mus0 = listaM.get(0);
+		mus1 = listaM.get(1);
+
+		Assert.assertEquals("Museo Domus",mus0.getNombre());
+		Assert.assertEquals("Ciencias", mus0.getCategoria());
+		Assert.assertEquals("A Corunha",mus0.getUbicacion());
+
+		Assert.assertEquals("Museo del Prado",mus1.getNombre());
+		Assert.assertEquals("Arte", mus1.getCategoria());
+		Assert.assertEquals("Madrid",mus1.getUbicacion());
+	}
+
+
 }

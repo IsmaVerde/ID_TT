@@ -8,7 +8,6 @@ import gei.id.tutelado.dao.MuseoDao;
 import gei.id.tutelado.dao.MuseoDaoJPA;
 import gei.id.tutelado.model.Museo;
 import gei.id.tutelado.model.Socios;
-import gei.id.tutelado.model.Usuario;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.LazyInitializationException;
@@ -19,7 +18,6 @@ import org.junit.runner.Description;
 import org.junit.runners.MethodSorters;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -113,14 +111,15 @@ public class Test2_Museos_Inscritos {
 		Assert.assertTrue(produtorDatos.m1.getInscritos().isEmpty());
 		produtorDatos.m1.agregarSocios(produtorDatos.s0);
 		Assert.assertEquals(produtorDatos.m1.getInscritos().size(),1);
-		Assert.assertEquals(produtorDatos.m1.getInscritos().toArray()[0],produtorDatos.s0);
+		Assert.assertTrue(produtorDatos.m1.getInscritos().contains(produtorDatos.s0));
+
 
     	log.info("");	
 		log.info("Gravando segunda entrada de log dun usuario ---------------------------------------------------------------------");
     	socDao.alta(produtorDatos.s1);
 		produtorDatos.m1.agregarSocios(produtorDatos.s1);
     	Assert.assertEquals(produtorDatos.m1.getInscritos().size(),2);
-		Assert.assertEquals(produtorDatos.m1.getInscritos().toArray()[1],produtorDatos.s1);
+		Assert.assertTrue(produtorDatos.m1.getInscritos().contains(produtorDatos.s1));
     }
 
     @Test //Test recupera por dni sin lazy ni eager
@@ -192,8 +191,8 @@ public class Test2_Museos_Inscritos {
 		log.info("Acceso a entradas de log de usuario");
     	try	{
 			Assert.assertEquals(2, m.getInscritos().size());
-        	Assert.assertEquals(produtorDatos.s4, m.getInscritos().toArray()[0]);
-        	Assert.assertEquals(produtorDatos.s0, m.getInscritos().toArray()[1]);
+			Assert.assertTrue( m.getInscritos().contains(produtorDatos.s4));
+			Assert.assertTrue( m.getInscritos().contains(produtorDatos.s1));
         	excepcion=false;
     	} catch (LazyInitializationException ex) {
     		excepcion=true;
@@ -209,14 +208,15 @@ public class Test2_Museos_Inscritos {
     	
     	Assert.assertEquals(2, m.getInscritos().size());
 		System.out.println(m.getInscritos());
-    	Assert.assertEquals(produtorDatos.s0, m.getInscritos().toArray()[0]);
-    	Assert.assertEquals(produtorDatos.s4, m.getInscritos().toArray()[1]);
+    	Assert.assertTrue( m.getInscritos().contains(produtorDatos.s4));
+		Assert.assertTrue( m.getInscritos().contains(produtorDatos.s1));
 
-    	log.info("");
+
+		log.info("");
     	log.info("Probando acceso a referencia EAGER ------------------------------------------------------------------------------");
     
     	s = (Socios) socDao.recuperaPorDni(produtorDatos.s1.getDni());
-    	Assert.assertEquals(produtorDatos.m1, s.getMuseos().toArray()[0]);
+    	Assert.assertTrue(s.getMuseos().contains(produtorDatos.m1));
     } 	
 
     @Test //eliminar usuario
@@ -284,7 +284,8 @@ public class Test2_Museos_Inscritos {
 
 		s2 = (Socios) socDao.recuperaPorDni(produtorDatos.s2.getDni());
 
-		Assert.assertNotEquals(nuevoMuseo, s2.getMuseos().toArray()[0]);
+		Assert.assertFalse(s2.getMuseos().contains(nuevoMuseo));
+
 		s2.setMuseos(listaMuseos);
 
 		socDao.modifica(s2);

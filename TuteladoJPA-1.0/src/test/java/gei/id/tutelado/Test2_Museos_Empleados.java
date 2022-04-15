@@ -111,7 +111,7 @@ public class Test2_Museos_Empleados {
     	Assert.assertNull(produtorDatos.e0.getId());
     	empDao.alta(produtorDatos.e0);
     	Assert.assertNotNull(produtorDatos.e0.getId());
-		Assert.assertEquals(produtorDatos.m1.getEmpleados().toArray()[0],produtorDatos.e0);
+		Assert.assertTrue(produtorDatos.m1.getEmpleados().contains(produtorDatos.e0));
 
     	produtorDatos.m1.agregarEmpleado(produtorDatos.e1);
 
@@ -120,7 +120,7 @@ public class Test2_Museos_Empleados {
     	Assert.assertNull(produtorDatos.e1.getId());
     	empDao.alta(produtorDatos.e1);
     	Assert.assertNotNull(produtorDatos.e1.getId());
-		Assert.assertEquals(produtorDatos.m1.getEmpleados().toArray()[1],produtorDatos.e1);
+		Assert.assertTrue(produtorDatos.m1.getEmpleados().contains(produtorDatos.e1));
     }
 
     @Test 
@@ -165,7 +165,7 @@ public class Test2_Museos_Empleados {
     public void t2b_CRUD_TestRecupera() {
     	
     	Museo m;
-    	Empleados e;
+    	Empleados e ,e1;
     	Boolean excepcion;
     	
     	log.info("");	
@@ -193,7 +193,7 @@ public class Test2_Museos_Empleados {
     	try	{
 
 			Assert.assertEquals(1, m.getEmpleados().size());
-        	Assert.assertEquals(produtorDatos.e1, m.getEmpleados().toArray()[0]);
+			Assert.assertTrue(m.getEmpleados().contains(produtorDatos.e1));
         	excepcion=false;
     	} catch (LazyInitializationException ex) {
     		excepcion=true;
@@ -208,9 +208,17 @@ public class Test2_Museos_Empleados {
     	m = musDao.restauraEmpleados(m);						// Usuario u con proxy xa inicializado
     	
     	Assert.assertEquals(1, m.getEmpleados().size());
-		Assert.assertEquals(produtorDatos.e1, m.getEmpleados().toArray()[0]);
+		Assert.assertTrue(m.getEmpleados().contains(produtorDatos.e1));
 
-    } 	
+		log.info("");
+		log.info("Probando carga forzada de coleccion LAZY ------------------------------------------------------------------------");
+
+		e1 = (Empleados) empDao.recuperaPorDni((produtorDatos.e0.getDni()));
+		e1 = empDao.recuperaMuseo(e1);						// Usuario u con proxy xa inicializado
+
+		System.out.println(e1.getMuseo().getNombre());
+		Assert.assertTrue(m.getEmpleados().contains(produtorDatos.e1));
+	}
 
     @Test 
     public void t3a_CRUD_TestElimina() {

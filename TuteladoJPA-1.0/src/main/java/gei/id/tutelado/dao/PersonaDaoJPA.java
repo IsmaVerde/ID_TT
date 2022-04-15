@@ -7,8 +7,10 @@ import javax.persistence.EntityManagerFactory;
 
 import gei.id.tutelado.configuracion.Configuracion;
 import gei.id.tutelado.model.Empleados;
+import gei.id.tutelado.model.Museo;
 import gei.id.tutelado.model.Persona;
 import gei.id.tutelado.model.Socios;
+import org.hibernate.LazyInitializationException;
 
 
 public class PersonaDaoJPA implements PersonaDao {
@@ -119,21 +121,33 @@ public class PersonaDaoJPA implements PersonaDao {
 
     @Override
     public Empleados recuperaMuseo(Empleados empleado) {
-        // Devuelve un objeto empleado con su museos cargado (Si ne estaban cargados ya)
 
         try {
             em = emf.createEntityManager();
             em.getTransaction().begin();
 
-            empleado = em.merge(empleado);
+            try {
+                empleado.getMuseo().getEmpleados();
+            } catch (Exception ex2) {
+                if (ex2 instanceof LazyInitializationException)
 
+                {
+
+                    empleado = em.merge(empleado);
+                    empleado.getMuseo().getEmpleados();
+
+                } else {
+                    throw ex2;
+                }
+            }
             em.getTransaction().commit();
             em.close();
-        } catch (Exception ex) {
-            if (em != null && em.isOpen()) {
+        }
+        catch (Exception ex ) {
+            if (em!=null && em.isOpen()) {
                 if (em.getTransaction().isActive()) em.getTransaction().rollback();
                 em.close();
-                throw (ex);
+                throw(ex);
             }
         }
 
@@ -167,15 +181,15 @@ public class PersonaDaoJPA implements PersonaDao {
     }
 
     @Override
-    public List<Socios> recuperaMuseos(Long idSocio) {
-        List <Socios> socios=null;
+    public List<Museo> recuperaMuseos(Long idSocio) {
+        List <Museo> museos=null;
 
         try {
             em = emf.createEntityManager();
             em.getTransaction().begin();
 
-            socios = em.createNamedQuery("Socios.recuperaMuseos", Socios.class)
-                    .setParameter("idSocio", idSocio).getResultList();
+            museos = em.createNamedQuery("Socios.recuperaMuseos", Museo.class)
+                    .setParameter("id", idSocio).getResultList();
 
             em.getTransaction().commit();
             em.close();
@@ -189,7 +203,7 @@ public class PersonaDaoJPA implements PersonaDao {
             }
         }
 
-        return socios;
+        return museos;
     }
 
     @Override

@@ -2,6 +2,7 @@ package gei.id.tutelado.dao;
 
 import gei.id.tutelado.configuracion.Configuracion;
 import gei.id.tutelado.model.Empleados;
+import gei.id.tutelado.model.Museo;
 import gei.id.tutelado.model.Persona;
 import gei.id.tutelado.model.Socios;
 
@@ -17,10 +18,14 @@ public interface PersonaDao {
     void elimina (Persona persona);
     Persona recuperaPorDni (String dni);
 
-    List<Socios> recuperaMuseos(Long socio);
+    List<Museo> recuperaMuseos(Long socio);
+
+
     List<Socios> recuperaSociosMinDosMuseos();
 
     Empleados recuperaMuseo (Empleados empleado);
+
+
     List<Double> recuperaSueldoMedio();
 
 }

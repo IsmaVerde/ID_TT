@@ -7,7 +7,7 @@ import java.util.Set;
 
 @NamedQueries ({
         @NamedQuery (name="Socios.recuperaMuseos",
-                query="SELECT s FROM Socios s INNER JOIN s.museos m where s.museos=:museos"),
+                query="SELECT m FROM Socios s INNER JOIN s.museos m where s.id=:id"),
         @NamedQuery (name="Socios.recuperaSociosMinDosMuseos",
                 query="SELECT s FROM Socios s where (SELECT COUNT(m) FROM s.museos m) >=2"),
         @NamedQuery (name="Socios.recuperaPorDni",
