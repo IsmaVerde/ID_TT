@@ -18,9 +18,10 @@ public interface PersonaDao {
     void elimina (Persona persona);
     Persona recuperaPorDni (String dni);
 
+    Empleados restauraMuseo (Empleados empleado);
+
     List<Museo> recuperaMuseos(Long socio);
     List<Socios> recuperaSociosMinDosMuseos();
-    Empleados recuperaMuseo (Empleados empleado);
     List<Double> recuperaSueldoMedio();
 
 }

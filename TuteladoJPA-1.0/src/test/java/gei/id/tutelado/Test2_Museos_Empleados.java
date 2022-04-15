@@ -214,7 +214,7 @@ public class Test2_Museos_Empleados {
 		log.info("Probando carga forzada de coleccion LAZY ------------------------------------------------------------------------");
 
 		e1 = (Empleados) empDao.recuperaPorDni((produtorDatos.e0.getDni()));
-		e1 = empDao.recuperaMuseo(e1);						// Empleado e con proxy ya inicializado
+		e1 = empDao.restauraMuseo(e1);						// Empleado e con proxy ya inicializado
 
 		System.out.println(e1.getMuseo().getNombre());
 		Assert.assertTrue(m.getEmpleados().contains(produtorDatos.e1));

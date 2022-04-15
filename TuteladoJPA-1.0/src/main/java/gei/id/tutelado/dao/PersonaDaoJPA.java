@@ -118,7 +118,7 @@ public class PersonaDaoJPA implements PersonaDao {
     }
 
     @Override
-    public Empleados recuperaMuseo(Empleados empleado) {
+    public Empleados restauraMuseo(Empleados empleado) {
 
         try {
             em = emf.createEntityManager();
