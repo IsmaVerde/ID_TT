@@ -11,10 +11,7 @@ import java.util.Set;
                 query="SELECT m FROM Socios s INNER JOIN s.museos m where s.id=:id"),
         //Metodo que usa una subconsulta
         @NamedQuery (name="Socios.recuperaSociosMinDosMuseos",
-                query="SELECT s FROM Socios s where (SELECT COUNT(m) FROM s.museos m) >=2"),
-        //Recuperacion por clave natural
-        @NamedQuery (name="Socios.recuperaPorDni",
-                query="SELECT s FROM Socios s where s.dni=:dni")
+                query="SELECT s FROM Socios s where (SELECT COUNT(m) FROM s.museos m) >=2")
 })
 
 @Entity
